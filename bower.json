@@ -1,0 +1,28 @@
+{
+  "name": "angular-marked",
+  "version": "0.0.1",
+  "authors": [
+    "Hypercubed <hypercubed@gmail.com>"
+  ],
+  "description": "AngularJS Markdown using marked.",
+  "main": "marked.js",
+  "keywords": [
+    "angularjs",
+    "markdown",
+    "marked",
+    "directive",
+    "filter"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.5",
+    "marked": "~0.2.10"
+  }
+}
