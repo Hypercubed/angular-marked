@@ -52,7 +52,6 @@ Include a markdown file:
 	app.controller('myCtrl', ['marked', function(marked) {
 	  $scope.html = marked('#TEST');
 	}]);
-
 ```
 
 ## Why?

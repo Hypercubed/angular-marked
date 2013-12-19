@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+  <title>Karma DEBUG RUNNER</title>
+</head>
+<body>
+
+<div ng-app="myApp" ng-controller="myCtrl">
+  <!-- marked>## Element</marked>
+  <div marked>## Attribute</div>
+  <div marked="markdown"></div>
+  <div marked="'## String'"></div -->
+  <div marked ng-include="file"></div>
+</div>
+
+<script type="text/javascript" src="/base/bower_components/angular/angular.js"></script>
+<script type="text/javascript" src="/base/bower_components/angular-mocks/angular-mocks.js"></script>
+<script type="text/javascript" src="/base/bower_components/marked/lib/marked.js"></script>
+<script type="text/javascript" src="/base/angular-marked.js"></script>
+
+<script>
+angular.module('myApp', ['hc.marked']);
+
+function myCtrl($scope) {
+  $scope.markdown = "## Scope";
+  $scope.file = 'README.md';
+}
+
+</script>
+
+</body>
+</html>

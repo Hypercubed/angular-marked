@@ -1,6 +1,6 @@
 {
   "name": "angular-marked",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "authors": [
     "Hypercubed <hypercubed@gmail.com>"
   ],
@@ -24,5 +24,8 @@
   "dependencies": {
     "angular": "~1.2.5",
     "marked": "~0.2.10"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.5"
   }
 }

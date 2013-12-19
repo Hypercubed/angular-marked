@@ -34,14 +34,13 @@
         marked: '='
       },
       link: function (scope, element, attrs) {
+        var value = scope.marked || element.text()|| '';
+        element.html(marked(value, scope.opts || null));
 
-        if (attrs.marked) {
+        if (attrs.marked)
           scope.$watch('marked', function(value) {
-            element.html(marked(value || '', scope.opts || null));
+            element.html(marked(scope.marked || '', scope.opts || null));
           });
-        } else {
-          element.html(marked(element.text(), scope.opts || null));
-        }
 
       }
     };
