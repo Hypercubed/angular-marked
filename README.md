@@ -54,6 +54,10 @@ Include a markdown file:
 	}]);
 ```
 
+## Testing
+
+Install Karma: `npm install -g karma` and run `karma start`.
+
 ## Why?
 
 I wanted to use `marked` instead of `showdown` as used in `angular-markdown-directive` as well as expose the option to globally set defaults.  Yes, it is probably best to avoid creating a bunch of angular wrapper modules... but I use this enough across multiple projects to make it worth while for me.  Use it if you like.  Pull requests are welcome.
