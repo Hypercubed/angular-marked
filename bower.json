@@ -5,7 +5,7 @@
     "Hypercubed <hypercubed@gmail.com>"
   ],
   "description": "AngularJS Markdown using marked.",
-  "main": "marked.js",
+  "main": "angular-marked.js",
   "keywords": [
     "angularjs",
     "markdown",
