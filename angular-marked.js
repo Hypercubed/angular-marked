@@ -13,12 +13,7 @@
 
   var app = angular.module('hc.marked', []);
 
-  app.constant('marked', marked);
-
-  // Maybe this is better?
-  //app.service('marked', ['$window', function($window) {
-  //	return $window.marked;
-  //}]);
+  app.constant('marked', window.marked);
 
   // TODO: filter tests */
   //app.filter('marked', ['marked', function(marked) {
@@ -35,12 +30,17 @@
       },
       link: function (scope, element, attrs) {
         var value = scope.marked || element.text() || '';
-        element.html(marked(value, scope.opts || null));
+        set();
 
-        if (attrs.marked)
+        function set() {
+        	element.html(marked(value, scope.opts || null));
+        }
+        
+        if (attrs.marked) {
           scope.$watch('marked', function(value) {
             element.html(marked(value || '', scope.opts || null));
-          });
+          });        	
+        }
 
       }
     };
