@@ -4,28 +4,28 @@
  * License: MIT
  */
 
-/*
-
- TODO: tests:
-  
-   <marked>##TEXT 1</marked>
-   <div marked>##TEXT 2</div>
-   <div ng-init="scope_element = '##TEST 4'"><div marked="scope_element"></div></div>
-   <div marked="'##TEXT 3'"></div>
-   <div marked opts="{gfm: true}"></div>
-   <div marked ng-include="'filename.md'"></div>
-  
-*/
+/* jshint undef: true, unused: true */
+/* global angular:true */
+/* global marked:true */
 
 (function () {
+	'use strict';
 
   var app = angular.module('hc.marked', []);
 
   app.constant('marked', marked);
 
-  //TODO: filter
+  // Maybe this is better?
+  //app.service('marked', ['$window', function($window) {
+  //	return $window.marked;
+  //}]);
 
-  app.directive("marked", ['$http', 'marked', function ($http, marked) {
+  // TODO: filter tests */
+  //app.filter('marked', ['marked', function(marked) {
+	//  return marked;
+	//}]);
+
+  app.directive('marked', ['marked', function (marked) {
     return {
       restrict: 'AE',
       replace: true,
@@ -34,12 +34,12 @@
         marked: '='
       },
       link: function (scope, element, attrs) {
-        var value = scope.marked || element.text()|| '';
+        var value = scope.marked || element.text() || '';
         element.html(marked(value, scope.opts || null));
 
         if (attrs.marked)
           scope.$watch('marked', function(value) {
-            element.html(marked(scope.marked || '', scope.opts || null));
+            element.html(marked(value || '', scope.opts || null));
           });
 
       }
