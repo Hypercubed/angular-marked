@@ -30,9 +30,9 @@ Bind the markdown input to a scope variable:
 
 ```html
 
-	<div marked="markdown"> 
+	<div marked="my_markdown"> 
 	</div>
-	<!-- Uses $scope.markdown -->
+	<!-- Uses $scope.my_markdown -->
 ```
 
 Include a markdown file:
@@ -41,8 +41,7 @@ Include a markdown file:
 
 	<div marked ng-include="'README.md'"> 
 	</div>
-	<!-- Uses content from README.md -->
-
+	<!-- Uses markdown content from README.md -->
 ```
 
 ### As a service
