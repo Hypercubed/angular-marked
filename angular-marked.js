@@ -32,8 +32,8 @@
         var value = scope.marked || element.text() || '';
         set(value);
 
-        function set() {
-        	element.html(marked(value || '', scope.opts || null));
+        function set(val) {
+        	element.html(marked(val || '', scope.opts || null));
         }
         
         if (attrs.marked) {
