@@ -30,16 +30,14 @@
       },
       link: function (scope, element, attrs) {
         var value = scope.marked || element.text() || '';
-        set();
+        set(value);
 
         function set() {
-        	element.html(marked(value, scope.opts || null));
+        	element.html(marked(value || '', scope.opts || null));
         }
         
         if (attrs.marked) {
-          scope.$watch('marked', function(value) {
-            element.html(marked(value || '', scope.opts || null));
-          });        	
+          scope.$watch('marked', set);        	
         }
 
       }
