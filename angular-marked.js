@@ -1,12 +1,11 @@
 /*
- * angular-marked v0.0.1
  * (c) 2013 J. Harshbarger
  * License: MIT
  */
 
 /* jshint undef: true, unused: true */
 /* global angular:true */
-/* global marked:true */
+/* global window:true */
 
 (function () {
 	'use strict';

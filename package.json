@@ -6,15 +6,12 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {
-    "grunt": "~0.4.4",
-    "grunt-contrib-jshint": "~0.10.0",
-    "load-grunt-tasks": "~0.4.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "load-grunt-tasks": "^0.4.0",
     "grunt-contrib-jshint": "^0.10.0",
-    "grunt": "^0.4.4"
+    "grunt": "^0.4.4",
+    "grunt-release": "^0.7.0"
   },
   "scripts": {
     "test": "karma start"
