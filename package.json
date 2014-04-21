@@ -1,0 +1,36 @@
+{
+  "name": "angular-marked",
+  "version": "0.0.5",
+  "description": "AngularJS Markdown using marked.",
+  "main": "angular-marked.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "grunt": "~0.4.4",
+    "grunt-contrib-jshint": "~0.10.0",
+    "load-grunt-tasks": "~0.4.0"
+  },
+  "devDependencies": {
+    "load-grunt-tasks": "^0.4.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt": "^0.4.4"
+  },
+  "scripts": {
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Hypercubed/angular-marked.git"
+  },
+  "keywords": [
+    "marked",
+    "markdown"
+  ],
+  "author": "J. Harshbarger",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Hypercubed/angular-marked/issues"
+  },
+  "homepage": "https://github.com/Hypercubed/angular-marked"
+}
