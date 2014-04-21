@@ -5,7 +5,7 @@ module.exports = function(grunt){
     pkg: grunt.file.readJSON('bower.json'),
     jshint: {
       options: { jshintrc: true },
-      all: ['gruntfile.js', '<%= pkg.main %>']
+      all: ['gruntfile.js', '<%= pkg.name %>.js']
     },
     release: {
       options: {
@@ -15,12 +15,13 @@ module.exports = function(grunt){
     },
     uglify: {
       options: {
-      banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-        '<%= grunt.template.today("yyyy-mm-dd") %> */'
+        banner: '/*\n * <%= pkg.title || pkg.name %> - v<%= pkg.version %>\n' +
+          ' * (c) <%= grunt.template.today("yyyy") %> <%= pkg.authors.join(" ") %>\n' +
+          ' * Licensed <%= pkg.license %>\n */\n'
       },
       src: {
         files: {
-          'angular-marked.min.js': '<%= pkg.main %>'
+          '<%= pkg.name %>.min.js': '<%= pkg.name %>.js'
         }
       }
     }

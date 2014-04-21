@@ -2,7 +2,7 @@
   "name": "angular-marked",
   "version": "0.0.8",
   "authors": [
-    "Hypercubed <hypercubed@gmail.com>"
+    "J. Harshbarger"
   ],
   "description": "AngularJS Markdown using marked.",
   "main": "angular-marked.js",

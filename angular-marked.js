@@ -1,6 +1,7 @@
 /*
- * (c) 2013 J. Harshbarger
- * License: MIT
+ * angular-marked - v0.0.8 
+ * (c) 2014 J. Harshbarger
+ * Licensed MIT
  */
 
 /* jshint undef: true, unused: true */
