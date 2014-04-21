@@ -24,13 +24,24 @@ module.exports = function(grunt){
           '<%= pkg.name %>.min.js': '<%= pkg.name %>.js'
         }
       }
+    },
+    karma: {
+      unit: {
+        configFile: 'karma.conf.js'
+      },
+      once: {
+        configFile: 'karma.conf.js',
+        singleRun: true,
+        browsers: ['PhantomJS']
+      }
     }
   });
 
   require('load-grunt-tasks')(grunt);
 
-  grunt.registerTask('default', ['build']);
+  grunt.registerTask('default', ['build','test']);
   grunt.registerTask('build', ['jshint', 'uglify']);
-  grunt.registerTask('publish', ['build','release']);
+  grunt.registerTask('test', ['karma:once']);
+  grunt.registerTask('publish', ['build','test','release']);
 
 };
