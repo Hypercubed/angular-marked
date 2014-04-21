@@ -15,7 +15,7 @@ module.exports = function(grunt){
     },
     uglify: {
       options: {
-        banner: '/*\n * <%= pkg.title || pkg.name %> - v<%= pkg.version %>\n' +
+        banner: '/*\n * <%= pkg.title || pkg.name %>\n' +
           ' * (c) <%= grunt.template.today("yyyy") %> <%= pkg.authors.join(" ") %>\n' +
           ' * Licensed <%= pkg.license %>\n */\n'
       },
@@ -29,7 +29,8 @@ module.exports = function(grunt){
 
   require('load-grunt-tasks')(grunt);
 
-  grunt.registerTask('default', ['jshint']);
-  grunt.registerTask('publish', ['jshint','uglify','release']);
+  grunt.registerTask('default', ['build']);
+  grunt.registerTask('build', ['jshint', 'uglify']);
+  grunt.registerTask('publish', ['build','release']);
 
 };
