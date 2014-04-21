@@ -2,7 +2,7 @@
 AngularJS Markdown using [marked](https://github.com/chjj/marked).
 
 ## Usage
-1. `bower install Hypercubed/angular-marked`
+1. `bower install angular-marked` or `bower install Hypercubed/angular-marked`
 2. Include the `marked.js` script into your app.  By default should be at `bower_components/marked/lib/marked.js`.
 3. Include the `angular-marked.js` into your app (after `marked.js`).  By default should be at `bower_components/angular-marked/angular-marked.js`.
 4. Add `hc.marked` as a module dependency to your app.
@@ -55,7 +55,13 @@ Include a markdown file:
 
 ## Testing
 
-Install Karma: `npm install -g karma` and run `karma start`.
+Install npm and bower dependencies: 
+
+```
+	npm install
+	bower install
+	npm test
+```
 
 ## Why?
 

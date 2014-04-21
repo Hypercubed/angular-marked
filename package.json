@@ -11,10 +11,13 @@
     "load-grunt-tasks": "^0.4.0",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt": "^0.4.4",
-    "grunt-release": "^0.7.0"
+    "grunt-release": "^0.7.0",
+    "karma": "^0.12.9",
+    "karma-chrome-launcher": "^0.1.3",
+    "karma-jasmine": "^0.1.5"
   },
   "scripts": {
-    "test": "karma start"
+    "test": "node ./node_modules/karma/bin/karma start"
   },
   "repository": {
     "type": "git",
