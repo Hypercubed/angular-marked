@@ -29,8 +29,7 @@
         marked: '='
       },
       link: function (scope, element, attrs) {
-        var value = scope.marked || element.text() || '';
-        set(value);
+        set(scope.marked || element.text() || '');
 
         function set(val) {
         	element.html(marked(val || '', scope.opts || null));
