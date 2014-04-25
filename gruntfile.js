@@ -13,6 +13,15 @@ module.exports = function(grunt){
         npm: false
       }
     },
+    bump: {
+      options: {
+        files: ['bower.json','package.json'],
+        commit: true,
+        commitMessage: 'release %VERSION%',
+        commitFiles: ['package.json','<%= pkg.name %>.min.js'], // '-a' for all files
+        pushTo: 'origin',
+      }
+    }
     uglify: {
       options: {
         banner: '/*\n * <%= pkg.title || pkg.name %>\n' +
@@ -42,6 +51,6 @@ module.exports = function(grunt){
   grunt.registerTask('default', ['build','test']);
   grunt.registerTask('build', ['jshint', 'uglify']);
   grunt.registerTask('test', ['karma:once']);
-  grunt.registerTask('publish', ['build','test','release']);
+  grunt.registerTask('publish', ['build','test','bump']);
 
 };
