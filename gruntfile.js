@@ -21,7 +21,7 @@ module.exports = function(grunt){
         commitFiles: ['package.json','<%= pkg.name %>.min.js'], // '-a' for all files
         pushTo: 'origin',
       }
-    }
+    },
     uglify: {
       options: {
         banner: '/*\n * <%= pkg.title || pkg.name %>\n' +
