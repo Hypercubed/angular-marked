@@ -57,7 +57,18 @@ describe('Directive: marked,', function () {
       element = $compile('<marked>## Element</marked>')(scope);
       expect(element.html()).toContain('<h2 id="element">Element</h2>');
     });
+
+    it('should convert markdown', function () {
+      element = $compile('<marked>**test**</marked>')(scope);
+      expect(element.html()).toContain('<p><strong>test</strong></p>');
+    }); 
+
+    it('should convert markdown', function () {
+      element = $compile('<marked>`test`</marked>')(scope);
+      expect(element.html()).toContain('<p><code>test</code></p>');
+    });     
   });
+
 
   describe('Attribute,', function () {
     it('should convert markdown', function () {
