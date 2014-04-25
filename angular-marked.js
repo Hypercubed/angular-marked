@@ -13,7 +13,26 @@
 
   var app = angular.module('hc.marked', []);
 
-  app.constant('marked', window.marked);
+  //app.constant('marked', window.marked);
+
+  app.provider('marked', function () {
+
+    var self = this;
+
+    self.setOptions = function(opts) {  // Store options for later
+      this.defaults = opts;
+    }
+
+    self.$get = ['$window',function ($window) { 
+      var m = $window.marked;
+
+      self.setOptions = m.setOptions;
+      m.setOptions(self.defaults);
+
+      return m;
+    }];
+
+  });
 
   // TODO: filter tests */
   //app.filter('marked', ['marked', function(marked) {
