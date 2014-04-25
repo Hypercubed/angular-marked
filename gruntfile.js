@@ -7,18 +7,12 @@ module.exports = function(grunt){
       options: { jshintrc: true },
       all: ['gruntfile.js', '<%= pkg.name %>.js']
     },
-    release: {
-      options: {
-        file: 'bower.json',
-        npm: false
-      }
-    },
     bump: {
       options: {
         files: ['bower.json','package.json'],
         commit: true,
         commitMessage: 'release %VERSION%',
-        commitFiles: ['package.json','<%= pkg.name %>.min.js'], // '-a' for all files
+        commitFiles: ['package.json','bower.json','<%= pkg.name %>.min.js'], // '-a' for all files
         pushTo: 'origin',
       }
     },
