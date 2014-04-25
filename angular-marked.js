@@ -6,7 +6,6 @@
 
 /* jshint undef: true, unused: true */
 /* global angular:true */
-/* global window:true */
 
 (function () {
 	'use strict';
@@ -21,7 +20,7 @@
 
     self.setOptions = function(opts) {  // Store options for later
       this.defaults = opts;
-    }
+    };
 
     self.$get = ['$window',function ($window) { 
       var m = $window.marked;

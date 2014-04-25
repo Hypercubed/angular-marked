@@ -18,7 +18,7 @@ module.exports = function(grunt){
     },
     uglify: {
       options: {
-        banner: '/*\n * <%= pkg.title || pkg.name %>\n' +
+        banner: '/*\n * <%= pkg.title || pkg.name %> <%= pkg.version %>\n' +
           ' * (c) <%= grunt.template.today("yyyy") %> <%= pkg.authors.join(" ") %>\n' +
           ' * Licensed <%= pkg.license %>\n */\n'
       },
@@ -45,6 +45,6 @@ module.exports = function(grunt){
   grunt.registerTask('default', ['build','test']);
   grunt.registerTask('build', ['jshint', 'uglify']);
   grunt.registerTask('test', ['karma:once']);
-  grunt.registerTask('publish', ['build','test','bump']);
+  grunt.registerTask('publish', ['test','bump-only','uglify','bump-commit']);
 
 };
