@@ -16,6 +16,18 @@ AngularJS Markdown using [marked](https://github.com/chjj/marked).
 	}]);
 ```
 
+Example using [highlight.js Javascript syntax highlighter](http://highlightjs.org/) (must include highlight.js script).
+
+```js
+marked.setOptions({
+      gfm: true,
+      tables: true,
+      highlight: function (code) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+```
+
 ### As a directive
 
 ```html
