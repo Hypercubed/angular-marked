@@ -11,15 +11,15 @@ AngularJS Markdown using [marked](https://github.com/chjj/marked).
 
 ```js
 
-	app.config(['marked', function(marked) {
-	  marked.setOptions({gfm: true});
+	app.config(['markedProvider', function(markedProvider) {
+	  markedProvider.setOptions({gfm: true});
 	}]);
 ```
 
 Example using [highlight.js Javascript syntax highlighter](http://highlightjs.org/) (must include highlight.js script).
 
 ```js
-marked.setOptions({
+	markedProvider.setOptions({
       gfm: true,
       tables: true,
       highlight: function (code) {

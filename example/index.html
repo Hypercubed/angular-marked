@@ -62,16 +62,30 @@ I wanted to use `marked` instead of `showdown` as used in `angular-markdown-dire
     <span class="c">&lt;!-- Uses markdown content from README.md --&gt;</span>
 </pre></div>
 
+<marked>
+Set default options
+
+```js
+app.config(['markedProvider', function(markedProvider) {
+  markedProvider.setOptions({gfm: true});
+}]);
+
+```
+
+</marked>
+
     </div>
   </body>
 
   <script>
+    var app = angular.module('example-app', ['hc.marked']);
 
-    angular.module('example-app', ['hc.marked']);
+    app.config(['markedProvider', function(markedProvider) {
+      markedProvider.setOptions({gfm: true});
+    }]);
 
-    var MainController = function($scope) {
+    app.controller('MainController', ['$scope', function($scope) {
       $scope.my_markdown = "*This* **is** [markdown](https://daringfireball.net/projects/markdown/)";
-
-    };
+    }]);
   </script>
 </html>

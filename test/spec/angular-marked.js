@@ -4,6 +4,35 @@
 // TODO: test ng-include
 // TODO: test marked.setOptions
 
+describe('Provider: marked,', function () {
+
+  var theMarkedProvider,
+    $injector;
+
+  beforeEach(function () {
+      var fakeModule = angular.module('test.app.config', function () {});
+      fakeModule.config( function (markedProvider) {
+          theMarkedProvider = markedProvider;
+      });
+
+      module('hc.marked', 'test.app.config');
+
+      inject(function () {});
+  });
+
+  it('should provide a provider', inject(function ($injector) {
+
+    expect(theMarkedProvider).not.toBeUndefined();
+
+    expect($injector.get('marked').defaults.gfm).toBe(true);  // the default
+
+    theMarkedProvider.setOptions({gfm: false});
+
+    expect($injector.get('marked').defaults.gfm).toBe(false);
+
+  }));
+});
+
 describe('Directive: marked,', function () {
 
   // load the directive's module
