@@ -25,50 +25,62 @@
 <marked>
 ### What?
 Convert markdown to html at run time.
+
+
+#### For example, this:
+
+```html
+
+  &lt;textarea ng-model="my_markdown" cols="60" rows="5">&lt;/textarea>
+  &lt;div marked="my_markdown">&lt;/div>
+```
+
+#### Becomes this:
 </marked>
 
-For example, this:
 <p>
-<form>
-  <p><textarea placeholder="Enter markdown here" ng-model="my_markdown" cols="60" rows="5"></textarea></p>
-</form>
-</p>
-
-Becomes this:
-<div marked="my_markdown">
-</div>
+<textarea ng-model="my_markdown" cols="60" rows="5"></textarea>
+<div marked="my_markdown"></div>
 
 <marked>
 ### Why?
-I wanted to use `marked` instead of `showdown` as used in `angular-markdown-directive` as well as expose the option to globally set defaults.
+I wanted to use [marked](https://github.com/chjj/marked) instead of [showdown](https://github.com/coreyti/showdown) as used in [angular-markdown-directive](https://github.com/btford/angular-markdown-directive) as well as expose the option to globally set defaults.
 
 ### How?
-</marked>
 
-<p>A block of text:</p>
-<div class="highlight highlight-html"><pre>    <span class="nt">&lt;marked&gt;</span>
+#### A block of text:
+
+```html
+
+    &lt;marked>
 #Markdown directive   
 *It works!*
-    <span class="nt">&lt;/marked&gt;</span>
-</pre></div>
-<p>Bind the markdown input to a scope variable:</p>
-<div class="highlight highlight-html"><pre>    <span class="nt">&lt;div</span> <span class="na">marked=</span><span class="s">"my_markdown"</span><span class="nt">&gt;</span> 
-    <span class="nt">&lt;/div&gt;</span>
-    <span class="c">&lt;!-- Uses $scope.my_markdown --&gt;</span>
-</pre></div>
-<p>Include a markdown file:</p>
-<div class="highlight highlight-html"><pre>    <span class="nt">&lt;div</span> <span class="na">marked</span> <span class="na">ng-include=</span><span class="s">"'README.md'"</span><span class="nt">&gt;</span> 
-    <span class="nt">&lt;/div&gt;</span>
-    <span class="c">&lt;!-- Uses markdown content from README.md --&gt;</span>
-</pre></div>
+    &lt;/marked>
+```
 
-<marked>
-Set default options
+#### Bind the markdown input to a scope variable:
+
+```html
+
+    &lt;div marked="my_markdown">&lt;/div>
+    &lt;!-- Uses $scope.my_markdown -->
+```
+
+#### Include a markdown file:
+
+```html
+
+    &lt;div marked ng-include="'README.md'">&lt;/div>
+    &lt;!-- Uses markdown content from README.md -->
+```
+
+#### Set default options
 
 ```js
-app.config(['markedProvider', function(markedProvider) {
-  markedProvider.setOptions({gfm: true});
-}]);
+
+  app.config(['markedProvider', function(markedProvider) {
+    markedProvider.setOptions({gfm: true});
+  }]);
 
 ```
 
