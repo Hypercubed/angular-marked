@@ -3,19 +3,22 @@ module.exports = function(grunt){
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('bower.json'),
+
     jshint: {
       options: { jshintrc: true },
       all: ['gruntfile.js', '<%= pkg.name %>.js']
     },
+
     bump: {
       options: {
         files: ['bower.json','package.json'],
         commit: true,
         commitMessage: 'release %VERSION%',
-        commitFiles: ['package.json','bower.json','<%= pkg.name %>.min.js'], // '-a' for all files
+        commitFiles: ['package.json','bower.json','<%= pkg.name %>.min.js'],
         pushTo: 'origin',
       }
     },
+
     uglify: {
       options: {
         banner: '/*\n * <%= pkg.title || pkg.name %> <%= pkg.version %>\n' +
@@ -28,6 +31,7 @@ module.exports = function(grunt){
         }
       }
     },
+
     karma: {
       unit: {
         configFile: 'karma.conf.js'
@@ -37,14 +41,19 @@ module.exports = function(grunt){
         singleRun: true,
         browsers: ['PhantomJS']
       }
+    },
+
+    'gh-pages': {
+      src: ['<%= pkg.name %>.js','<%= pkg.name %>.min.js','bower_components/**/*','example/*']
     }
+
   });
 
   require('load-grunt-tasks')(grunt);
 
-  grunt.registerTask('default', ['build','test']);
+  grunt.registerTask('default', ['test', 'build']);
   grunt.registerTask('build', ['jshint', 'uglify']);
   grunt.registerTask('test', ['karma:once']);
-  grunt.registerTask('publish', ['test','bump-only','uglify','bump-commit']);
+  grunt.registerTask('publish', ['test','bump-only','uglify','bump-commit','gh-pages']);
 
 };

@@ -6,7 +6,9 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {},
+  "dependencies": {
+    "grunt-gh-pages": "^0.9.1"
+  },
   "devDependencies": {
     "load-grunt-tasks": "^0.4.0",
     "grunt-contrib-jshint": "^0.10.0",
