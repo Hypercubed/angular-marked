@@ -10,7 +10,6 @@ AngularJS Markdown using [marked](https://github.com/chjj/marked).
 ### Set default options (optional)
 
 ```js
-
 	app.config(['markedProvider', function(markedProvider) {
 	  markedProvider.setOptions({gfm: true});
 	}]);
@@ -31,9 +30,8 @@ Example using [highlight.js Javascript syntax highlighter](http://highlightjs.or
 ### As a directive
 
 ```html
-
-	<marked>   
-	     #Markdown directive   
+	<marked>
+	     #Markdown directive
 	     *It works!*  
 	</marked>
 ```
@@ -41,8 +39,7 @@ Example using [highlight.js Javascript syntax highlighter](http://highlightjs.or
 Bind the markdown input to a scope variable:
 
 ```html
-
-	<div marked="my_markdown"> 
+	<div marked="my_markdown">
 	</div>
 	<!-- Uses $scope.my_markdown -->
 ```
@@ -50,8 +47,7 @@ Bind the markdown input to a scope variable:
 Include a markdown file:
 
 ```html
-
-	<div marked ng-include="'README.md'"> 
+	<div marked ng-include="'README.md'">
 	</div>
 	<!-- Uses markdown content from README.md -->
 ```
@@ -59,7 +55,6 @@ Include a markdown file:
 ### As a service
 
 ```js
-
 	app.controller('myCtrl', ['marked', function(marked) {
 	  $scope.html = marked('#TEST');
 	}]);
@@ -67,9 +62,9 @@ Include a markdown file:
 
 ## Testing
 
-Install npm and bower dependencies: 
+Install npm and bower dependencies:
 
-```
+```bash
 	npm install
 	bower install
 	npm test

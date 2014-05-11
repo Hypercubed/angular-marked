@@ -1,42 +1,55 @@
 'use strict';
 
-// TODO: test options
 // TODO: test ng-include
-// TODO: test marked.setOptions
 
 describe('Provider: marked,', function () {
 
-  var theMarkedProvider,
+  var markedProvider,
     $injector;
 
   beforeEach(function () {
-      var fakeModule = angular.module('test.app.config', function () {});
-      fakeModule.config( function (markedProvider) {
-          theMarkedProvider = markedProvider;
-      });
 
-      module('hc.marked', 'test.app.config');
+      angular.module('test.app.config', function () {})
+        .config( function (_markedProvider_) {
+          markedProvider = _markedProvider_;
+          spyOn(markedProvider, 'setOptions').andCallThrough();
+        });
 
-      inject(function () {});
+      angular.mock.module('hc.marked', 'test.app.config');
+
   });
 
-  it('should provide a provider', inject(function ($injector) {
+  it('should start with defaults', inject(function ($injector, marked) {
 
-    expect(theMarkedProvider).not.toBeUndefined();
+    expect(markedProvider).not.toBeUndefined();
 
-    expect($injector.get('marked').defaults.gfm).toBe(true);  // the default
-
-    theMarkedProvider.setOptions({gfm: false});
-
-    expect($injector.get('marked').defaults.gfm).toBe(false);
+    expect(marked.defaults.gfm).toBeTruthy();
+    expect(marked.defaults.breaks).toBeFalsy();
+    expect(marked.defaults.silent).toBeFalsy();
+    expect(marked.defaults.langPrefix).toBe('lang-');
 
   }));
+
+  it('should enable changing defaults', inject(function ($injector) {
+
+    markedProvider.setOptions({gfm: true, silent: true});
+    expect(markedProvider.setOptions).toHaveBeenCalled();
+
+    var marked = $injector.get('marked');
+
+    expect(marked.defaults.gfm).toBeTruthy();
+    expect(marked.defaults.breaks).toBeFalsy();
+    expect(marked.defaults.silent).toBeTruthy();
+    expect(marked.defaults.langPrefix).toBe('lang-');
+
+  }));
+
 });
 
 describe('Directive: marked,', function () {
 
   // load the directive's module
-  beforeEach(module('hc.marked'));
+  beforeEach(angular.mock.module('hc.marked'));
 
   var element,
     scope,
@@ -90,12 +103,12 @@ describe('Directive: marked,', function () {
     it('should convert markdown', function () {
       element = $compile('<marked>**test**</marked>')(scope);
       expect(element.html()).toContain('<p><strong>test</strong></p>');
-    }); 
+    });
 
     it('should convert markdown', function () {
       element = $compile('<marked>`test`</marked>')(scope);
       expect(element.html()).toContain('<p><code>test</code></p>');
-    });     
+    });
   });
 
 

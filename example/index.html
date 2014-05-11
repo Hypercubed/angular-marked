@@ -30,7 +30,6 @@ Convert markdown to html at run time.
 #### For example, this:
 
 ```html
-
   &lt;textarea ng-model="my_markdown" cols="60" rows="5">&lt;/textarea>
   &lt;div marked="my_markdown">&lt;/div>
 ```
@@ -51,9 +50,8 @@ I wanted to use [marked](https://github.com/chjj/marked) instead of [showdown](h
 #### A block of text:
 
 ```html
-
     &lt;marked>
-#Markdown directive   
+#Markdown directive
 *It works!*
     &lt;/marked>
 ```
@@ -61,7 +59,6 @@ I wanted to use [marked](https://github.com/chjj/marked) instead of [showdown](h
 #### Bind the markdown input to a scope variable:
 
 ```html
-
     &lt;div marked="my_markdown">&lt;/div>
     &lt;!-- Uses $scope.my_markdown -->
 ```
@@ -69,7 +66,6 @@ I wanted to use [marked](https://github.com/chjj/marked) instead of [showdown](h
 #### Include a markdown file:
 
 ```html
-
     &lt;div marked ng-include="'README.md'">&lt;/div>
     &lt;!-- Uses markdown content from README.md -->
 ```
@@ -77,7 +73,6 @@ I wanted to use [marked](https://github.com/chjj/marked) instead of [showdown](h
 #### Set default options
 
 ```js
-
   app.config(['markedProvider', function(markedProvider) {
     markedProvider.setOptions({gfm: true});
   }]);
