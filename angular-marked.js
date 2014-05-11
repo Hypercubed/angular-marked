@@ -22,7 +22,7 @@
       this.defaults = opts;
     };
 
-    self.$get = ['$window',function ($window) { 
+    self.$get = ['$window',function ($window) {
       var m = $window.marked;
 
       self.setOptions = m.setOptions;
@@ -50,11 +50,11 @@
         set(scope.marked || element.text() || '');
 
         function set(val) {
-        	element.html(marked(val || '', scope.opts || null));
+          element.html(marked(val || '', scope.opts || null));
         }
-        
+
         if (attrs.marked) {
-          scope.$watch('marked', set);        	
+          scope.$watch('marked', set);
         }
 
       }
