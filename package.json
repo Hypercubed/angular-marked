@@ -7,7 +7,6 @@
     "test": "test"
   },
   "dependencies": {
-    "grunt-gh-pages": "^0.9.1"
   },
   "devDependencies": {
     "load-grunt-tasks": "^0.4.0",
@@ -19,7 +18,8 @@
     "grunt-contrib-uglify": "^0.4.0",
     "grunt-karma": "^0.8.2",
     "karma-phantomjs-launcher": "^0.1.4",
-    "grunt-bump": "0.0.13"
+    "grunt-bump": "0.0.13",
+    "grunt-gh-pages": "^0.9.1"
   },
   "scripts": {
     "test": "grunt test"
