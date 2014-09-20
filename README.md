@@ -1,5 +1,9 @@
-# angular-marked
+# angular-marked [![Bower version](https://badge.fury.io/bo/angular-marked.svg)](http://badge.fury.io/bo/angular-marked)
+===
+
 AngularJS Markdown using [marked](https://github.com/chjj/marked).
+
+[![get this with bower](http://benschwarz.github.io/bower-badges/badge@2x.png)](http://bower.io/ "get this with bower")
 
 ## Usage
 1. `bower install angular-marked` or `bower install Hypercubed/angular-marked`
@@ -78,4 +82,7 @@ I wanted to use `marked` instead of `showdown` as used in `angular-markdown-dire
 Based on [angular-markdown-directive](https://github.com/btford/angular-markdown-directive) by [briantford](http://briantford.com/) which, in turn, is based on [this excellent tutorial](http://blog.angularjs.org/2012/05/custom-components-part-1.html) by [@johnlinquist](https://twitter.com/johnlindquist).
 
 ## License
-MIT
+Copyright (c) 2013 Jayson Harshbarger [![Gittip donate button](http://img.shields.io/gratipay/Hypercubed.svg)](https://www.gittip.com/hypercubed/ "Donate weekly to this project using Gittip")
+[![Paypal donate button](http://img.shields.io/badge/paypal-donate-brightgreen.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X7KYR6T9U2NHC "One time donation to this project using Paypal")
+
+[MIT License](http://en.wikipedia.org/wiki/MIT_License)
