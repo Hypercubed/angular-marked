@@ -6,8 +6,7 @@
 
 /* jshint undef: true, unused: true */
 /* global angular:true */
-
-
+/* global document:true */
 
 (function () {
 	'use strict';
@@ -17,7 +16,7 @@
    * @name index
    *
    * @description
-   * AngularJS Markdown using marked.
+   * AngularJS Markdown using [marked](https://github.com/chjj/marked).
    *
    * ## Why?
    *
@@ -26,7 +25,7 @@
    * ## How?
    *
    * - {@link hc.marked.directive:marked As a directive}
-   * - {@link hc.marked.service:service As a service}
+   * - {@link hc.marked.service:marked As a service}
    * - {@link hc.marked.service:markedProvider Set default options}
    *
    * @example
@@ -37,9 +36,9 @@
         <file name=".html">
           <form ng-controller="MainController">
             Markdown:<br />
-            <textarea ng-model="my_markdown" cols="60" rows="5"></textarea><br />
+            <textarea ng-model="my_markdown" cols="60" rows="5" class="span8" /><br />
             Output:<br />
-            <div marked="my_markdown"></div>
+            <div marked="my_markdown" />
           </form>
         </file>
         <file  name=".js">
@@ -84,6 +83,40 @@
    * @description
    * Use `markedProvider` to change the default behavior of the {@link hc.marked.service:marked marked} service.
    *
+	 * @example
+
+		## Example using [google-code-prettify syntax highlighter](https://code.google.com/p/google-code-prettify/) (must include google-code-prettify.js script).  Also works with [highlight.js Javascript syntax highlighter](http://highlightjs.org/).
+
+		<example module="myApp">
+		<file name=".js">
+		angular.module('myApp', ['hc.marked'])
+			.config(['markedProvider', function(markedProvider) {
+				markedProvider.setOptions({
+					gfm: true,
+					tables: true,
+					highlight: function (code) {
+						return prettyPrintOne(code);
+					}
+				});
+			}]);
+		</file>
+		<file name=".html">
+			<marked>
+			```js
+			angular.module('myApp', ['hc.marked'])
+				.config(['markedProvider', function(markedProvider) {
+					markedProvider.setOptions({
+						gfm: true,
+						tables: true,
+						highlight: function (code) {
+							return prettyPrintOne(code);
+						}
+					});
+				}]);
+			```
+			</marked>
+		</file>
+		</example>
   **/
 
   .provider('marked', function () {
@@ -141,7 +174,7 @@
          *
          * *It works!*
          *
-         * *This* **is** [markdown](https://daringfireball.net/projects/markdown/)
+         * *This* **is** [markdown](https://daringfireball.net/projects/markdown/) in the view.
          * </marked>
         </file>
       </example>
@@ -152,26 +185,34 @@
         <file name="exampleB.html">
           <form ng-controller="MainController">
             Markdown:<br />
-            <textarea ng-model="my_markdown" cols="60" rows="5"></textarea><br />
+            <textarea ng-model="my_markdown" class="span8" cols="60" rows="5"></textarea><br />
             Output:<br />
             <blockquote marked="my_markdown"></blockquote>
           </form>
         </file>
         <file  name="exampleB.js">
-          function MainController($scope) {
-            $scope.my_markdown = "*This* **is** [markdown](https://daringfireball.net/projects/markdown/)";
-          }
+          * function MainController($scope) {
+          *   $scope.my_markdown = '*This* **is** [markdown](https://daringfireball.net/projects/markdown/)';
+					*   $scope.my_markdown += ' in a scope variable';
+          * }
         </file>
       </example>
 
       ## Include a markdown file:
 
-       <example module="hc.marked">
+       <example module="myApp">
          <file name="exampleC.html">
-           <div marked ng-include="'README.md'">
-           </div>
-           <!-- Uses markdown content from README.md -->
+           <div marked ng-include="'fakeInclude.md'" />
          </file>
+				<file name="exampleC.js">
+					var myApp = angular.module('myApp', ['hc.marked']);
+					myApp.run(function($templateCache) {
+					  var md = '*This* **is** [markdown](https://daringfireball.net/projects/markdown/)';
+						md += ' in a [include file][]';
+						md += '\n\n[include file]: # "Not really"';
+					  $templateCache.put('fakeInclude.md', md);
+					});
+				</file>
        </example>
    */
   .directive('marked', ['marked', function (marked) {

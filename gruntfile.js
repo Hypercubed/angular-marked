@@ -5,7 +5,7 @@ module.exports = function(grunt){
     pkg: grunt.file.readJSON('bower.json'),
 
     jshint: {
-      options: { jshintrc: true },
+      options: { jshintrc: true, force: true },
       all: ['gruntfile.js', '<%= pkg.name %>.js']
     },
 
@@ -50,13 +50,23 @@ module.exports = function(grunt){
     },
 
     'gh-pages': {
-      src: ['<%= pkg.name %>.js','<%= pkg.name %>.min.js','bower_components/**/*','example/*']
+      options: {
+        base: 'docs'
+      },
+      src: ['**']
     },
 
     ngdocs: {
       options: {
         html5Mode: false,
-        scripts: ['angular.js','./bower_components/marked/lib/marked.js','./<%= pkg.name %>.js']//,
+        titleLink: "#/api",
+        navTemplate: './docs-template/nav.html',
+        scripts: [
+          'angular.js',
+          './bower_components/marked/lib/marked.js',
+          './<%= pkg.name %>.js',
+          './docs-template/script.js',
+        ]
       },
       all: ['<%= pkg.name %>.js']
     },
@@ -74,7 +84,7 @@ module.exports = function(grunt){
 
     watch: {
       parser: {
-        files: ['<%= pkg.name %>.js'],
+        files: ['<%= pkg.name %>.js','./docs-template/*.*'],
         tasks: ['build']
       }
     }
