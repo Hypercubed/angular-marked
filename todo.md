@@ -6,6 +6,7 @@ _\( managed using [todo-md](https://github.com/Hypercubed/todo-md) \)_
 - [ ] Add testing to gruntfile
 - [x] Minify?
 - [ ] ngmin?
-- [ ] Example for markedProvider in ngDocs
-- [ ] Fix ng-include demo.
+- [x] Example for markedProvider in ngDocs
+- [x] Fix ng-include demo.
 - [ ] Tutorial?
+- [ ] grunt-conventional-changelog?
