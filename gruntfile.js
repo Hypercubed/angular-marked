@@ -51,14 +51,42 @@ module.exports = function(grunt){
 
     'gh-pages': {
       src: ['<%= pkg.name %>.js','<%= pkg.name %>.min.js','bower_components/**/*','example/*']
+    },
+
+    ngdocs: {
+      options: {
+        html5Mode: false,
+        scripts: ['angular.js','./bower_components/marked/lib/marked.js','./<%= pkg.name %>.js']//,
+      },
+      all: ['<%= pkg.name %>.js']
+    },
+
+    connect: {
+      server: {
+        options: {
+          port: 9001,
+          base: 'docs',
+          hostname: 'localhost',
+          open: true
+        }
+      }
+    },
+
+    watch: {
+      parser: {
+        files: ['<%= pkg.name %>.js'],
+        tasks: ['build']
+      }
     }
 
   });
 
   require('load-grunt-tasks')(grunt);
 
+  grunt.registerTask('serve', ['build','connect','watch']);
+
   grunt.registerTask('default', ['test', 'build']);
-  grunt.registerTask('build', ['jshint', 'uglify']);
+  grunt.registerTask('build', ['jshint', 'uglify', 'ngdocs']);
   grunt.registerTask('test', ['karma:once']);
   grunt.registerTask('publish', ['test','bump-only','uglify','bump-commit','gh-pages']);
 
