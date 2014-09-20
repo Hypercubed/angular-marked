@@ -6,7 +6,6 @@
 
 /* jshint undef: true, unused: true */
 /* global angular:true */
-/* global document:true */
 
 (function () {
 	'use strict';
@@ -73,8 +72,6 @@
         }
       </file>
     </example>
-
-
    **/
 
    /**
@@ -215,6 +212,7 @@
 				</file>
        </example>
    */
+   
   .directive('marked', ['marked', function (marked) {
     return {
       restrict: 'AE',
