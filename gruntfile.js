@@ -66,7 +66,12 @@ module.exports = function(grunt){
           './bower_components/marked/lib/marked.js',
           './<%= pkg.name %>.js',
           './docs-template/script.js',
-        ]
+        ],
+        discussions: {
+          shortName: 'hypercubedgithub',
+          url: 'http://hypercubed.github.io/angular-marked/',
+          dev: false
+        }
       },
       all: ['<%= pkg.name %>.js']
     },
