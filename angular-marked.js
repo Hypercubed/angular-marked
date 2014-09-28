@@ -50,6 +50,26 @@
     *
     */
 
+    /**
+     * @ngdoc overview
+     * @name hc.marked
+     * @description # angular-marked (core module)
+       # Installation
+      First include angular-marked.js in your HTML:
+
+      ```js
+        <script src="angular-marked.js">
+      ```
+
+      Then load the module in your application by adding it as a dependency:
+
+      ```js
+      angular.module('yourApp', ['hc.marked']);
+      ```
+
+      With that you're ready to get started!
+     */
+
   angular.module('hc.marked', [])
 
     /**
