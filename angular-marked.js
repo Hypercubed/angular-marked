@@ -6,6 +6,7 @@
 
 /* jshint undef: true, unused: true */
 /* global angular:true */
+/* global marked:true */
 
 (function () {
 	'use strict';
@@ -75,9 +76,8 @@
     /**
     * @ngdoc service
     * @name hc.marked.service:marked
-    * @requires $window
     * @description
-    * A reference to the [marked](https://github.com/chjj/marked) parser.  Same as `$window.marked`.
+    * A reference to the [marked](https://github.com/chjj/marked) parser.
     *
     * @example
     <example module="hc.marked">
@@ -152,8 +152,8 @@
       this.defaults = opts;
     };
 
-    self.$get = ['$window',function ($window) {
-      var m = $window.marked;
+    self.$get = [function () {
+      var m = marked;
 
       self.setOptions = m.setOptions;
       m.setOptions(self.defaults);
