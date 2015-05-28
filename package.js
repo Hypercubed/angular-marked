@@ -1,9 +1,9 @@
 // package metadata file for Meteor.js
-var packageName = 'oshai:angular-marked';
+var packageName = 'hypercubed:angular-marked';
 var where = 'client'; // where to install: 'client' or 'server'. For both, pass nothing.
 var version = '0.0.14';
 var summary = 'AngularJS Markdown using marked.';
-var gitLink = 'https://github.com/oshai/angular-marked';
+var gitLink = 'https://github.com/hypercubed/angular-marked';
 var documentationFile = 'README.md';
 
 // Meta-data
