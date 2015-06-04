@@ -76,6 +76,7 @@
     /**
     * @ngdoc service
     * @name hc.marked.service:marked
+		* @requires $window
     * @description
     * A reference to the [marked](https://github.com/chjj/marked) parser.
     *
@@ -152,8 +153,8 @@
       this.defaults = opts;
     };
 
-    self.$get = [function () {
-      var m = marked;
+    self.$get = ['$window', function ($window) {
+      var m = $window.marked || marked;
 
       self.setOptions = m.setOptions;
       m.setOptions(self.defaults);
