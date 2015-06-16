@@ -71,6 +71,7 @@
       With that you're ready to get started!
      */
 
+  module.exports = 'hc.marked';
   angular.module('hc.marked', [])
 
     /**
@@ -154,7 +155,7 @@
     };
 
     self.$get = ['$window', function ($window) {
-      var m = $window.marked || marked;
+      var m = require('marked') || $window.marked || marked;
 
       self.setOptions = m.setOptions;
       m.setOptions(self.defaults);
