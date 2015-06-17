@@ -16,15 +16,15 @@ AngularJS Markdown using [marked](https://github.com/chjj/marked).
 ### Set default options (optional)
 
 ```js
-	app.config(['markedProvider', function(markedProvider) {
-	  markedProvider.setOptions({gfm: true});
-	}]);
+    app.config(['markedProvider', function(markedProvider) {
+      markedProvider.setOptions({gfm: true});
+    }]);
 ```
 
 Example using [highlight.js Javascript syntax highlighter](http://highlightjs.org/) (must include highlight.js script).
 
 ```js
-	markedProvider.setOptions({
+    markedProvider.setOptions({
       gfm: true,
       tables: true,
       highlight: function (code) {
@@ -33,37 +33,51 @@ Example using [highlight.js Javascript syntax highlighter](http://highlightjs.or
     });
 ```
 
+### Override Rendered Markdown Links
+
+Example overriding the way custom markdown links are displayed to open in new windows:
+
+```js
+    app.config(['markedProvider', function(markedProvider) {
+      markedProvider.setRenderer({
+        link: function(href, title, text) {
+          return "<a href='" + href + "' title='" + title + "' target='_blank'>" + text + "</a>";
+        }
+      });
+    }]);
+```
+
 ### As a directive
 
 ```html
-	<marked>
-	     #Markdown directive
-	     *It works!*  
-	</marked>
+    <marked>
+         #Markdown directive
+         *It works!*  
+    </marked>
 ```
 
 Bind the markdown input to a scope variable:
 
 ```html
-	<div marked="my_markdown">
-	</div>
-	<!-- Uses $scope.my_markdown -->
+    <div marked="my_markdown">
+    </div>
+    <!-- Uses $scope.my_markdown -->
 ```
 
 Include a markdown file:
 
 ```html
-	<div marked ng-include="'README.md'">
-	</div>
-	<!-- Uses markdown content from README.md -->
+    <div marked ng-include="'README.md'">
+    </div>
+    <!-- Uses markdown content from README.md -->
 ```
 
 ### As a service
 
 ```js
-	app.controller('myCtrl', ['marked', function(marked) {
-	  $scope.html = marked('#TEST');
-	}]);
+    app.controller('myCtrl', ['marked', function(marked) {
+      $scope.html = marked('#TEST');
+    }]);
 ```
 
 ## Testing
@@ -71,9 +85,9 @@ Include a markdown file:
 Install npm and bower dependencies:
 
 ```bash
-	npm install
-	bower install
-	npm test
+    npm install
+    bower install
+    npm test
 ```
 
 ## Why?
