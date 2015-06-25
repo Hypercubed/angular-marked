@@ -71,7 +71,10 @@
       With that you're ready to get started!
      */
 
-  module.exports = 'hc.marked';
+  if (typeof module !== 'undefined' && typeof exports === 'object') {
+    module.exports = 'hc.marked';
+  };
+
   angular.module('hc.marked', [])
 
     /**
@@ -154,8 +157,22 @@
       this.defaults = opts;
     };
 
-    self.$get = ['$window', function ($window) {
-      var m = require('marked') || $window.marked || marked;
+    self.$get = ['$window', '$log', function ($window, $log) {
+
+      var m =  (function() {
+
+        if (typeof module !== 'undefined' && typeof exports === 'object') {
+          return require('marked');
+        } else {
+          return $window.marked || marked;
+        }
+
+      })();
+
+      if (angular.isUndefined(m)) {
+        $log.error('angular-marked Error: marked not loaded.  See installation instructions.');
+        return;
+      }
 
       self.setOptions = m.setOptions;
       m.setOptions(self.defaults);
