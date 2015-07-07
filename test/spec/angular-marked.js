@@ -51,7 +51,14 @@ describe('Directive: marked,', function () {
 
     $scope = $rootScope.$new();
 
-    $scope.markdown = markdown = "# A heading\n\nHello *world*. Here is a [link](//hello).\nAnd an image ![alt](http://angularjs.org/img/AngularJS-large.png).\n\n    Code goes here.\n";
+    $scope.markdown = markdown = [
+      '  # A heading',
+      '',
+      '  Hello *world*. Here is a [link](//hello).',
+      '  And an image ![alt](http://angularjs.org/img/AngularJS-large.png).',
+      '',
+      '      Code goes here.'
+    ].join('\r\n');
 
     html = "<h1 id=\"a-heading\">A heading</h1>\n<p>Hello <em>world</em>. Here is a <a href=\"//hello\">link</a>.\nAnd an image <img src=\"http://angularjs.org/img/AngularJS-large.png\" alt=\"alt\">.</p>\n<pre><code>Code goes here.\n</code></pre>";
 
@@ -99,8 +106,22 @@ describe('Directive: marked,', function () {
       element = $compile('<marked>`test`</marked>')($scope);
       expect(element.html()).toContain('<p><code>test</code></p>');
     });
-  });
 
+    it('should unindent', function () {
+      element = $compile('<marked>    **test**\n    1 2 3</marked>')($scope);
+      expect(element.html()).toContain('<p><strong>test</strong>\n1 2 3</p>');
+    });
+
+    it('should unindent based on shorted whitespace', function () {
+      element = $compile('<marked>    **test**\n  1 2 3</marked>')($scope);
+      expect(element.html()).toContain('<p>  <strong>test</strong>\n1 2 3</p>');
+    });
+
+    it('should handle crlf', function () {
+      element = $compile('<marked>    **test**\r\n    1 2 3</marked>')($scope);
+      expect(element.html()).toContain('<p><strong>test</strong>\n1 2 3</p>');
+    });
+  });
 
   describe('Attribute,', function () {
     it('should convert markdown', function () {

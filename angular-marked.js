@@ -7,6 +7,8 @@
 /* jshint undef: true, unused: true */
 /* global angular:true */
 /* global marked:true */
+/* global module */
+/* global require */
 
 (function () {
   'use strict';
@@ -73,7 +75,7 @@
 
   if (typeof module !== 'undefined' && typeof exports === 'object') {
     module.exports = 'hc.marked';
-  };
+  }
 
   angular.module('hc.marked', [])
 
@@ -184,14 +186,14 @@
         var r = new m.Renderer();
         var o = Object.keys(self.renderer),
             l = o.length;
-        
+
         while (l--) {
           r[o[l]] = self.renderer[o[l]];
         }
 
         // add the new renderer to the options if need be
         self.defaults = self.defaults ? self.defaults.renderer = r : self.defaults = {renderer: r };
-          
+
       }
 
       m.setOptions(self.defaults);
@@ -276,8 +278,32 @@
       link: function (scope, element, attrs) {
         set(scope.marked || element.text() || '');
 
-        function set(val) {
-          element.html(marked(val || '', scope.opts || null));
+        function unindent(text) {
+          if (!text) return text;
+
+          var lines  = text
+            .replace(/\t/g, '  ')
+            .split(/\r?\n/);
+
+          var i, l, min = null, line, len = lines.length;
+          for (i = 0; i < len; i++) {
+            line = lines[i];
+            l = line.match(/^(\s*)/)[0].length;
+            if (l === line.length) { continue; }
+            min = (l < min || min === null) ? l : min;
+          }
+
+          if (min !== null && min > 0) {
+            for (i = 0; i < len; i++) {
+              lines[i] = lines[i].substr(min);
+            }
+          }
+          return lines.join('\n');
+        }
+
+        function set(text) {
+          text = unindent(text || '');
+          element.html(marked(text, scope.opts || null));
         }
 
         if (attrs.marked) {

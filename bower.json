@@ -18,8 +18,12 @@
     "**/.*",
     "node_modules",
     "bower_components",
+    ".grunt",
     "test",
-    "tests"
+    "tests",
+    "docs",
+    "docs-template",
+    "example"
   ],
   "dependencies": {
     "angular": ">= 1.2.5",
