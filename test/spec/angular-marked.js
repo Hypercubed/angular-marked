@@ -16,12 +16,29 @@ describe('Provider: marked,', function () {
     });
 
   });
+  it('should allow for renderers to be overwritten', function(){
+    module(function(markedProvider) {
+        expect(markedProvider).toBeDefined();
+        markedProvider.setRenderer({
+            link: function(href, title, text) {
+                return "<a href='" + href + "' title='" + title + "' target='_blank'>" + text + "</a>";  
+            }
+        });
+    });
+
+    inject(function(marked){
+        var input = '[Google](http://google.com)'
+        var output = marked(input)
+        expect(output).toContain("target='_blank'")
+    })
+  });
 
   it('should enable changing defaults', function () {
 
     module(function ( markedProvider ) {
       expect(markedProvider).toBeDefined();
       markedProvider.setOptions({gfm: false, silent: true});
+      markedProvider.setRenderer({});
     });
 
     inject(function(marked) {
@@ -32,7 +49,6 @@ describe('Provider: marked,', function () {
     })
 
   });
-
 });
 
 describe('Directive: marked,', function () {
@@ -139,5 +155,4 @@ describe('Directive: marked,', function () {
       expect(element.html()).toContain('<h2 id="string">String</h2>');
     });
   });
-
 });

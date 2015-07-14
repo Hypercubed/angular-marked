@@ -192,8 +192,11 @@
         }
 
         // add the new renderer to the options if need be
-        self.defaults = self.defaults ? self.defaults.renderer = r : self.defaults = {renderer: r };
-
+        if(typeof self.defaults === "object") {
+          self.defaults.renderer = r
+        } else {
+          self.defaults = {renderer: r}
+        }
       }
 
       m.setOptions(self.defaults);
