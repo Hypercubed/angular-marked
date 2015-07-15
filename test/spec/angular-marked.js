@@ -21,16 +21,16 @@ describe('Provider: marked,', function () {
         expect(markedProvider).toBeDefined();
         markedProvider.setRenderer({
             link: function(href, title, text) {
-                return "<a href='" + href + "' title='" + title + "' target='_blank'>" + text + "</a>";  
+                return '<a href="' + href + '" title="' + title + '" target="_blank">' + text + '</a>';
             }
         });
     });
 
     inject(function(marked){
-        var input = '[Google](http://google.com)'
-        var output = marked(input)
-        expect(output).toContain("target='_blank'")
-    })
+        var input = '[Google](http://google.com)';
+        var output = marked(input);
+        expect(output).toContain('target="_blank"');
+    });
   });
 
   it('should enable changing defaults', function () {
@@ -46,7 +46,7 @@ describe('Provider: marked,', function () {
       expect(marked.defaults.breaks).toBeFalsy();
       expect(marked.defaults.silent).toBeTruthy();
       expect(marked.defaults.langPrefix).toBe('lang-');
-    })
+    });
 
   });
 });
