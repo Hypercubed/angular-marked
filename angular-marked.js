@@ -307,7 +307,9 @@
         }
 
         if (attrs.marked) {
-          scope.$watch('marked', set);
+          scope.$watch('marked', function (marked) {
+            if (marked) set(marked);
+          });
         }
 
       }
