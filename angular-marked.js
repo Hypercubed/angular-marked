@@ -259,7 +259,7 @@
 
        <example module="hc.marked">
          <file name="exampleC.html">
-           <div marked ng-include="'include.html'" />
+           <div marked src="'include.html'" />
          </file>
          * <file name="include.html">
          * *This* **is** [markdown](https://daringfireball.net/projects/markdown/) in a include file.
