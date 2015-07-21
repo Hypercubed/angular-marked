@@ -62,7 +62,8 @@ module.exports = function(grunt){
         titleLink: "#/api",
         navTemplate: './docs-template/nav.html',
         scripts: [
-          'angular.js',
+          './bower_components/angular/angular.js',
+          './bower_components/angular-animate/angular-animate.js',
           './bower_components/marked/lib/marked.js',
           './<%= pkg.name %>.js',
           './docs-template/script.js',
@@ -103,6 +104,7 @@ module.exports = function(grunt){
   grunt.registerTask('default', ['test', 'build']);
   grunt.registerTask('build', ['jshint', 'uglify', 'ngdocs']);
   grunt.registerTask('test', ['karma:once']);
+  grunt.registerTask('deploy', ['build', 'gh-pages']);
   grunt.registerTask('publish', ['test','bump-only','build','bump-commit','gh-pages']);
 
 };
