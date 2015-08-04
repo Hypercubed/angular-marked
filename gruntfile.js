@@ -69,7 +69,7 @@ module.exports = function(grunt){
         ],
         discussions: {
           shortName: 'hypercubedgithub',
-          url: 'http://hypercubed.github.io/angular-marked/',
+          url: 'http://hypercubed.github.io/<%= pkg.name %>/',
           dev: false
         }
       },
