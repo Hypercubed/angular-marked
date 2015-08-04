@@ -34,7 +34,7 @@
 
       Convert markdown to html at run time.  For example:
 
-      <example module="hc.marked">
+      <example module="app">
         <file name=".html">
           <form ng-controller="MainController">
             Markdown:<br />
@@ -47,6 +47,7 @@
           function MainController($scope) {
             $scope.my_markdown = "*This* **is** [markdown](https://daringfireball.net/projects/markdown/)";
           }
+          angular.module('app', ['hc.marked']).controller('MainController', MainController);
         </file>
       </example>
 
@@ -87,7 +88,7 @@
     * A reference to the [marked](https://github.com/chjj/marked) parser.
     *
     * @example
-    <example module="hc.marked">
+    <example module="app">
       <file name=".html">
         <div ng-controller="MainController">
           html: {{html}}
@@ -97,6 +98,7 @@
         function MainController($scope, marked) {
           $scope.html = marked('#TEST');
         }
+        angular.module('app', ['hc.marked']).controller('MainController', MainController);
       </file>
     </example>
    **/
@@ -227,18 +229,18 @@
       <example module="hc.marked">
         <file name="exampleA.html">
          * <marked>
-         * ### Markdown directive
+         *   ### Markdown directive
          *
-         * *It works!*
+         *   *It works!*
          *
-         * *This* **is** [markdown](https://daringfireball.net/projects/markdown/) in the view.
+         *   *This* **is** [markdown](https://daringfireball.net/projects/markdown/) in the view.
          * </marked>
         </file>
       </example>
 
      ## Bind to a scope variable
 
-      <example module="hc.marked">
+      <example module="app">
         <file name="exampleB.html">
           <form ng-controller="MainController">
             Markdown:<br />
@@ -249,9 +251,10 @@
         </file>
         <file  name="exampleB.js">
           * function MainController($scope) {
-          *   $scope.my_markdown = '*This* **is** [markdown](https://daringfireball.net/projects/markdown/)';
-          *   $scope.my_markdown += ' in a scope variable';
+          *     $scope.my_markdown = '*This* **is** [markdown](https://daringfireball.net/projects/markdown/)';
+          *     $scope.my_markdown += ' in a scope variable';
           * }
+          * angular.module('app', ['hc.marked']).controller('MainController', MainController);
         </file>
       </example>
 
