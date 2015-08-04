@@ -1,12 +1,14 @@
 {
   "name": "angular-marked",
-  "version": "0.0.12",
+  "version": "0.0.21",
   "description": "AngularJS Markdown using marked.",
   "main": "angular-marked.js",
   "directories": {
     "test": "test"
   },
-  "dependencies": {},
+  "dependencies": {
+    "marked": "^0.3.3"
+  },
   "devDependencies": {
     "load-grunt-tasks": "^0.4.0",
     "grunt-contrib-jshint": "^0.10.0",

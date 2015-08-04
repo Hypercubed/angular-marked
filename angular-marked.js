@@ -6,9 +6,12 @@
 
 /* jshint undef: true, unused: true */
 /* global angular:true */
+/* global marked:true */
+/* global module */
+/* global require */
 
 (function () {
-	'use strict';
+  'use strict';
 
   /**
    * @ngdoc overview
@@ -70,6 +73,10 @@
       With that you're ready to get started!
      */
 
+  if (typeof module !== 'undefined' && typeof exports === 'object') {
+    module.exports = 'hc.marked';
+  }
+
   angular.module('hc.marked', [])
 
     /**
@@ -77,7 +84,7 @@
     * @name hc.marked.service:marked
     * @requires $window
     * @description
-    * A reference to the [marked](https://github.com/chjj/marked) parser.  Same as `$window.marked`.
+    * A reference to the [marked](https://github.com/chjj/marked) parser.
     *
     * @example
     <example module="hc.marked">
@@ -100,40 +107,40 @@
    * @description
    * Use `markedProvider` to change the default behavior of the {@link hc.marked.service:marked marked} service.
    *
-	 * @example
+   * @example
 
-		## Example using [google-code-prettify syntax highlighter](https://code.google.com/p/google-code-prettify/) (must include google-code-prettify.js script).  Also works with [highlight.js Javascript syntax highlighter](http://highlightjs.org/).
+    ## Example using [google-code-prettify syntax highlighter](https://code.google.com/p/google-code-prettify/) (must include google-code-prettify.js script).  Also works with [highlight.js Javascript syntax highlighter](http://highlightjs.org/).
 
-		<example module="myApp">
-		<file name=".js">
-		angular.module('myApp', ['hc.marked'])
-			.config(['markedProvider', function(markedProvider) {
-				markedProvider.setOptions({
-					gfm: true,
-					tables: true,
-					highlight: function (code) {
-						return prettyPrintOne(code);
-					}
-				});
-			}]);
-		</file>
-		<file name=".html">
-			<marked>
-			```js
-			angular.module('myApp', ['hc.marked'])
-				.config(['markedProvider', function(markedProvider) {
-					markedProvider.setOptions({
-						gfm: true,
-						tables: true,
-						highlight: function (code) {
-							return prettyPrintOne(code);
-						}
-					});
-				}]);
-			```
-			</marked>
-		</file>
-		</example>
+    <example module="myApp">
+    <file name=".js">
+    angular.module('myApp', ['hc.marked'])
+      .config(['markedProvider', function(markedProvider) {
+        markedProvider.setOptions({
+          gfm: true,
+          tables: true,
+          highlight: function (code) {
+            return prettyPrintOne(code);
+          }
+        });
+      }]);
+    </file>
+    <file name=".html">
+      <marked>
+      ```js
+      angular.module('myApp', ['hc.marked'])
+        .config(['markedProvider', function(markedProvider) {
+          markedProvider.setOptions({
+            gfm: true,
+            tables: true,
+            highlight: function (code) {
+              return prettyPrintOne(code);
+            }
+          });
+        }]);
+      ```
+      </marked>
+    </file>
+    </example>
   **/
 
   .provider('marked', function () {
@@ -148,14 +155,47 @@
      * @param {object} opts Default options for [marked](https://github.com/chjj/marked#options-1).
      */
 
+    self.setRenderer = function (opts) {
+      this.renderer = opts;
+    };
+
     self.setOptions = function(opts) {  // Store options for later
       this.defaults = opts;
     };
 
-    self.$get = ['$window',function ($window) {
-      var m = $window.marked;
+    self.$get = ['$window', '$log', function ($window, $log) {
 
-      self.setOptions = m.setOptions;
+      var m =  (function() {
+
+        if (typeof module !== 'undefined' && typeof exports === 'object') {
+          return require('marked');
+        } else {
+          return $window.marked || marked;
+        }
+
+      })();
+
+      if (angular.isUndefined(m)) {
+        $log.error('angular-marked Error: marked not loaded.  See installation instructions.');
+        return;
+      }
+
+      // override rendered markdown html
+      // with custom definitions if defined
+      if (self.renderer) {
+        var r = new m.Renderer();
+        var o = Object.keys(self.renderer),
+            l = o.length;
+
+        while (l--) {
+          r[o[l]] = self.renderer[o[l]];
+        }
+
+        // add the new renderer to the options if need be
+        self.defaults = self.defaults || {};
+        self.defaults.renderer = r;
+      }
+
       m.setOptions(self.defaults);
 
       return m;
@@ -165,8 +205,8 @@
 
   // TODO: filter tests */
   //app.filter('marked', ['marked', function(marked) {
-	//  return marked;
-	//}]);
+  //  return marked;
+  //}]);
 
   /**
    * @ngdoc directive
@@ -210,7 +250,7 @@
         <file  name="exampleB.js">
           * function MainController($scope) {
           *   $scope.my_markdown = '*This* **is** [markdown](https://daringfireball.net/projects/markdown/)';
-					*   $scope.my_markdown += ' in a scope variable';
+          *   $scope.my_markdown += ' in a scope variable';
           * }
         </file>
       </example>
@@ -219,31 +259,64 @@
 
        <example module="hc.marked">
          <file name="exampleC.html">
-           <div marked ng-include="'include.html'" />
+           <div marked src="'include.html'" />
          </file>
-				 * <file name="include.html">
-				 * *This* **is** [markdown](https://daringfireball.net/projects/markdown/) in a include file.
-				 * </file>
+         * <file name="include.html">
+         * *This* **is** [markdown](https://daringfireball.net/projects/markdown/) in a include file.
+         * </file>
        </example>
    */
 
-  .directive('marked', ['marked', function (marked) {
+  .directive('marked', ['marked', '$templateRequest', function (marked, $templateRequest) {
     return {
       restrict: 'AE',
       replace: true,
       scope: {
         opts: '=',
-        marked: '='
+        marked: '=',
+        src: '='
       },
       link: function (scope, element, attrs) {
         set(scope.marked || element.text() || '');
 
-        function set(val) {
-          element.html(marked(val || '', scope.opts || null));
-        }
-
         if (attrs.marked) {
           scope.$watch('marked', set);
+        }
+
+        if (attrs.src) {
+          scope.$watch('src', function(src) {
+            $templateRequest(src, true).then(function(response) {
+              set(response);
+            });
+          });
+        }
+
+        function unindent(text) {
+          if (!text) return text;
+
+          var lines  = text
+            .replace(/\t/g, '  ')
+            .split(/\r?\n/);
+
+          var i, l, min = null, line, len = lines.length;
+          for (i = 0; i < len; i++) {
+            line = lines[i];
+            l = line.match(/^(\s*)/)[0].length;
+            if (l === line.length) { continue; }
+            min = (l < min || min === null) ? l : min;
+          }
+
+          if (min !== null && min > 0) {
+            for (i = 0; i < len; i++) {
+              lines[i] = lines[i].substr(min);
+            }
+          }
+          return lines.join('\n');
+        }
+
+        function set(text) {
+          text = unindent(text || '');
+          element.html(marked(text, scope.opts || null));
         }
 
       }
