@@ -42,7 +42,7 @@ Example overriding the way custom markdown links are displayed to open in new wi
 app.config(['markedProvider', function(markedProvider) {
   markedProvider.setRenderer({
     link: function(href, title, text) {
-      return "<a href='" + href + "' title='" + title + "' target='_blank'>" + text + "</a>";
+      return "<a href='" + href + "' title='" + (title ? title : '') + "' target='_blank'>" + text + "</a>";
     }
   });
 }]);
