@@ -52,7 +52,7 @@ app.config(['markedProvider', function(markedProvider) {
 
 ```html
 <marked>
-  #Markdown directive
+  # Markdown directive
   *It works!*  
 </marked>
 ```
