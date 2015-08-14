@@ -35,15 +35,15 @@
       Convert markdown to html at run time.  For example:
 
       <example module="app">
-        <file name=".html">
+        <file name="example.html">
           <form ng-controller="MainController">
             Markdown:<br />
-            <textarea ng-model="my_markdown" cols="60" rows="5" class="span8" /><br />
+            <textarea ng-model="my_markdown" cols="60" rows="5" class="span8"></textarea><br />
             Output:<br />
             <div marked="my_markdown" />
           </form>
         </file>
-        <file  name=".js">
+        <file  name="example.js">
           function MainController($scope) {
             $scope.my_markdown = "*This* **is** [markdown](https://daringfireball.net/projects/markdown/)";
           }
@@ -89,12 +89,12 @@
     *
     * @example
     <example module="app">
-      <file name=".html">
+      <file name="example.html">
         <div ng-controller="MainController">
           html: {{html}}
         </div>
       </file>
-      <file  name=".js">
+      <file  name="example.js">
         function MainController($scope, marked) {
           $scope.html = marked('#TEST');
         }
@@ -113,23 +113,9 @@
 
     ## Example using [google-code-prettify syntax highlighter](https://code.google.com/p/google-code-prettify/) (must include google-code-prettify.js script).  Also works with [highlight.js Javascript syntax highlighter](http://highlightjs.org/).
 
-    <example module="myApp">
-    <file name=".js">
-    angular.module('myApp', ['hc.marked'])
-      .config(['markedProvider', function(markedProvider) {
-        markedProvider.setOptions({
-          gfm: true,
-          tables: true,
-          highlight: function (code) {
-            return prettyPrintOne(code);
-          }
-        });
-      }]);
-    </file>
-    <file name=".html">
-      <marked>
-      ```js
-      angular.module('myApp', ['hc.marked'])
+    <example module="myAppA">
+      <file name="exampleA.js">
+      angular.module('myAppA', ['hc.marked'])
         .config(['markedProvider', function(markedProvider) {
           markedProvider.setOptions({
             gfm: true,
@@ -139,9 +125,44 @@
             }
           });
         }]);
-      ```
-      </marked>
-    </file>
+      </file>
+      <file name="exampleA.html">
+        <marked>
+        ```js
+        angular.module('myAppA', ['hc.marked'])
+          .config(['markedProvider', function(markedProvider) {
+            markedProvider.setOptions({
+              gfm: true,
+              tables: true,
+              highlight: function (code) {
+                return prettyPrintOne(code);
+              }
+            });
+          }]);
+        ```
+        </marked>
+      </file>
+    </example>
+
+    ## Example overriding the way custom markdown links are displayed
+
+    <example module="myAppB">
+      <file name="exampleB.js">
+      angular.module('myAppB', ['hc.marked'])
+        .config(['markedProvider', function(markedProvider) {
+          markedProvider.setRenderer({
+            link: function(href, title, text) {
+              return "<a href='" + href + "'" + (title ? " title='" + title + "'" : '') + " target='_blank'>" + text + "</a>";
+            }
+          });
+        }]);
+      </file>
+      <file name="exampleB.html">
+        <marked>
+          This is [an example](http://example.com/ "Title") inline link.
+          [This link](http://example.net/) has no title attribute.
+        </marked>
+      </file>
     </example>
   **/
 
@@ -151,15 +172,23 @@
 
     /**
      * @ngdoc method
-     * @name markedProvider#setOptions
+     * @name markedProvider#setRenderer
      * @methodOf hc.marked.service:markedProvider
      *
-     * @param {object} opts Default options for [marked](https://github.com/chjj/marked#options-1).
+     * @param {object} opts Default renderer options for [marked](https://github.com/chjj/marked#overriding-renderer-methods).
      */
 
     self.setRenderer = function (opts) {
       this.renderer = opts;
     };
+
+    /**
+     * @ngdoc method
+     * @name markedProvider#setOptions
+     * @methodOf hc.marked.service:markedProvider
+     *
+     * @param {object} opts Default options for [marked](https://github.com/chjj/marked#options-1).
+     */
 
     self.setOptions = function(opts) {  // Store options for later
       this.defaults = opts;
@@ -205,7 +234,7 @@
 
   })
 
-  // TODO: filter tests */
+  // TODO: filter and tests */
   //app.filter('marked', ['marked', function(marked) {
   //  return marked;
   //}]);
@@ -219,8 +248,10 @@
    * @description
    * Compiles source test into HTML.
    *
-   * @param {expression} marked The source text to be compiled.  If blank uses content as the source.
+   * @param {expression=} marked The source text to be compiled.  If blank uses content as the source.
    * @param {expression=} opts Hash of options that override defaults.
+   * @param {string=} src Expression evaluating to URL. If the source is a string constant,
+ *                 make sure you wrap it in **single** quotes, e.g. `src="'myPartialTemplate.html'"`.
    *
    * @example
 
