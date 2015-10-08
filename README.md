@@ -28,8 +28,12 @@ Example using [highlight.js Javascript syntax highlighter](http://highlightjs.or
 markedProvider.setOptions({
   gfm: true,
   tables: true,
-  highlight: function (code) {
-    return hljs.highlightAuto(code).value;
+  highlight: function (code, lang) {
+    if (lang) {
+      return hljs.highlight(lang, code, true).value;
+    } else {
+      return hljs.highlightAuto(code).value;
+    }
   }
 });
 ```
