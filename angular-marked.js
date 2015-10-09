@@ -301,7 +301,7 @@
        </example>
    */
 
-  .directive('marked', ['marked', '$templateRequest', function (marked, $templateRequest) {
+  .directive('marked', ['marked', '$templateRequest', '$timeout', function (marked, $templateRequest, $timeout) {
     return {
       restrict: 'AE',
       replace: true,
@@ -350,7 +350,9 @@
 
         function set(text) {
           text = unindent(text || '');
-          element.html(marked(text, scope.opts || null));
+          $timeout(function () {
+            element.html(marked(text, scope.opts || null));
+          });
         }
 
       }
