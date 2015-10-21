@@ -198,7 +198,7 @@
 
       var m =  (function() {
 
-        if (typeof module !== 'undefined' && typeof exports === 'object') {
+        if ((typeof module !== 'undefined' && typeof exports === 'object') || (typeof define === 'function' && define.amd)) {
           return require('marked');
         } else {
           return $window.marked || marked;
