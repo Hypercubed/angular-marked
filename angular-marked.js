@@ -301,16 +301,21 @@
        </example>
    */
 
-  .directive('marked', ['marked', '$templateRequest', '$compile', function (marked, $templateRequest, $compile) {
+  .directive('marked', ['marked', '$templateRequest', '$compile', '$timeout', function (marked, $templateRequest, $compile, $timeout) {
     return {
       restrict: 'AE',
       replace: true,
       scope: {
         opts: '=',
         marked: '=',
-        src: '='
+        src: '=',
+        compileOnce: '='
       },
       link: function (scope, element, attrs) {
+        if (scope.compileOnce == undefined) {
+            scope.compileOnce = true;
+        }
+
         set(scope.marked || element.text() || '');
 
         if (attrs.marked) {
@@ -353,6 +358,12 @@
           element.html(marked(text, scope.opts || null));
 
           $compile(element.contents())(scope);
+
+          if (scope.compileOnce) {
+              $timeout(function () {
+                  scope.$destroy();
+              }, 0);
+          }
         }
 
       }
