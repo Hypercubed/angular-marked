@@ -378,16 +378,15 @@
                     text = text.replace(/\\n\\n/, '\n\n');
                     
                     element.html(marked(text, scope.opts || null));
+
+                    if (scope.compileOnce) {
+                        scope.$destroy();
+                    }
                 }
 
                 function setValueAfterCompile(value) {
                     $timeout(function () {
                         set(value || '');
-
-                        if (scope.compileOnce) {
-                            //console.log(scope.$id);
-                            scope.$destroy();
-                        }
                     }, 0);
                 }
 

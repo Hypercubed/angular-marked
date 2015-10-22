@@ -91,7 +91,7 @@ describe('Directive: marked,', function () {
     describe('Include', function () {
         it('should convert file', function () {
 
-            element = $compile('<div><div marked src="file">JUNK</div></div>')($scope);
+            element = $compile('<div><div marked src="file" compile-once="false">JUNK</div></div>')($scope);
             $scope.$digest();
             expect(element.html()).toContain(html);
             expect(element.html()).not.toContain('JUNK');
@@ -99,7 +99,7 @@ describe('Directive: marked,', function () {
         });
 
         it('should convert file', function () {
-            element = $compile('<div><div marked src="\'file.md\'">JUNK</div></div>')($scope);
+            element = $compile('<div><div marked src="\'file.md\'" compile-once="false">JUNK</div></div>')($scope);
             $scope.$digest();
             expect(element.html()).toContain(html);
             expect(element.html()).not.toContain('JUNK');
