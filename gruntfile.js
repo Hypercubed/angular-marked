@@ -1,53 +1,8 @@
-module.exports = function(grunt){
+module.exports = function (grunt) {
   'use strict';
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('bower.json'),
-
-    jshint: {
-      options: { jshintrc: true, force: true },
-      all: ['gruntfile.js', '<%= pkg.name %>.js']
-    },
-
-    bump: {
-      options: {
-        files: ['bower.json','package.json'],
-        commit: true,
-        commitMessage: 'release %VERSION%',
-        commitFiles: ['package.json','bower.json','<%= pkg.name %>.min.js'],
-        pushTo: 'origin',
-      }
-    },
-
-    uglify: {
-      options: {
-        banner: '/*\n * <%= pkg.title || pkg.name %> <%= pkg.version %>\n' +
-          ' * (c) <%= grunt.template.today("yyyy") %> <%= pkg.authors.join(" ") %>\n' +
-          ' * Licensed <%= pkg.license %>\n */\n'
-      },
-      src: {
-        files: {
-          '<%= pkg.name %>.min.js': '<%= pkg.name %>.js'
-        }
-      }
-    },
-
-    karma: {
-      unit: {
-        configFile: 'karma.conf.js'
-      },
-      once: {
-        configFile: 'karma.conf.js',
-        singleRun: true,
-        browsers: ['PhantomJS']
-      },
-      server: {
-        configFile: 'karma.conf.js',
-        singleRun: false,
-        autoWatch: true,
-        browsers: ['PhantomJS']
-      }
-    },
 
     'gh-pages': {
       options: {
@@ -59,14 +14,14 @@ module.exports = function(grunt){
     ngdocs: {
       options: {
         html5Mode: false,
-        titleLink: "#/api",
+        titleLink: '#/api',
         navTemplate: './docs-template/nav.html',
         scripts: [
           './bower_components/angular/angular.js',
           './bower_components/angular-animate/angular-animate.js',
           './bower_components/marked/lib/marked.js',
-          './<%= pkg.name %>.js',
-          './docs-template/script.js',
+          './dist/<%= pkg.name %>.js',
+          './docs-template/script.js'
         ],
         discussions: {
           shortName: 'hypercubedgithub',
@@ -74,37 +29,13 @@ module.exports = function(grunt){
           dev: false
         }
       },
-      all: ['<%= pkg.name %>.js']
-    },
-
-    connect: {
-      server: {
-        options: {
-          port: 9001,
-          base: 'docs',
-          hostname: 'localhost',
-          open: true
-        }
-      }
-    },
-
-    watch: {
-      parser: {
-        files: ['<%= pkg.name %>.js','./docs-template/*.*'],
-        tasks: ['build']
-      }
+      all: ['lib/<%= pkg.name %>.js']
     }
 
   });
 
   require('load-grunt-tasks')(grunt);
 
-  grunt.registerTask('serve', ['build','connect','watch']);
-
-  grunt.registerTask('default', ['test', 'build']);
-  grunt.registerTask('build', ['jshint', 'uglify', 'ngdocs']);
-  grunt.registerTask('test', ['karma:once']);
+  grunt.registerTask('build', ['ngdocs']);
   grunt.registerTask('deploy', ['build', 'gh-pages']);
-  grunt.registerTask('publish', ['test','bump-only','build','bump-commit','gh-pages']);
-
 };

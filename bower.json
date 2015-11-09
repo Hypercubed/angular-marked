@@ -5,7 +5,7 @@
     "J. Harshbarger"
   ],
   "description": "AngularJS Markdown using marked.",
-  "main": "angular-marked.js",
+  "main": "dist/angular-marked.js",
   "keywords": [
     "angularjs",
     "markdown",

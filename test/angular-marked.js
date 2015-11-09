@@ -1,3 +1,6 @@
+/* global describe, beforeEach, it */
+/* global expect */
+/* global inject */
 
 // TODO: test ng-include
 
@@ -7,47 +10,43 @@ describe('Provider: marked,', function () {
   beforeEach(module('hc.marked'));
 
   it('should start with defaults', function () {
-
-    inject(function(marked) {
+    inject(function (marked) {
       expect(marked.defaults.gfm).toBeTruthy();
       expect(marked.defaults.breaks).toBeFalsy();
       expect(marked.defaults.silent).toBeFalsy();
       expect(marked.defaults.langPrefix).toBe('lang-');
     });
-
   });
-  it('should allow for renderers to be overwritten', function(){
-    module(function(markedProvider) {
-        expect(markedProvider).toBeDefined();
-        markedProvider.setRenderer({
-            link: function(href, title, text) {
-                return '<a href="' + href + '" title="' + title + '" target="_blank">' + text + '</a>';
-            }
-        });
+  it('should allow for renderers to be overwritten', function () {
+    module(function (markedProvider) {
+      expect(markedProvider).toBeDefined();
+      markedProvider.setRenderer({
+        link: function (href, title, text) {
+          return '<a href="' + href + '" title="' + title + '" target="_blank">' + text + '</a>';
+        }
+      });
     });
 
-    inject(function(marked){
-        var input = '[Google](http://google.com)';
-        var output = marked(input);
-        expect(output).toContain('target="_blank"');
+    inject(function (marked) {
+      var input = '[Google](http://google.com)';
+      var output = marked(input);
+      expect(output).toContain('target="_blank"');
     });
   });
 
   it('should enable changing defaults', function () {
-
-    module(function ( markedProvider ) {
+    module(function (markedProvider) {
       expect(markedProvider).toBeDefined();
       markedProvider.setOptions({gfm: false, silent: true});
       markedProvider.setRenderer({});
     });
 
-    inject(function(marked) {
+    inject(function (marked) {
       expect(marked.defaults.gfm).toBeFalsy();
       expect(marked.defaults.breaks).toBeFalsy();
       expect(marked.defaults.silent).toBeTruthy();
       expect(marked.defaults.langPrefix).toBe('lang-');
     });
-
   });
 });
 
@@ -59,12 +58,11 @@ describe('Directive: marked,', function () {
 
   var element,
     $scope,
-    $httpBackend,
+    // $httpBackend,
     $compile,
     markdown, html;
 
   beforeEach(inject(function ($rootScope, $templateCache, _$compile_) {
-
     $scope = $rootScope.$new();
 
     $scope.markdown = markdown = [
@@ -76,23 +74,20 @@ describe('Directive: marked,', function () {
       '      <test>Code goes here.</test>'
     ].join('\r\n');
 
-    html = "<h1 id=\"a-heading\">A heading</h1>\n<p>Hello <em>world</em>. Here is a <a href=\"//hello\">link</a>.\nAnd an image <img src=\"http://angularjs.org/img/AngularJS-large.png\" alt=\"alt\">.</p>\n<pre><code>&lt;test&gt;Code goes here.&lt;/test&gt;\n</code></pre>";
+    html = '<h1 id="a-heading">A heading</h1>\n<p>Hello <em>world</em>. Here is a <a href="//hello">link</a>.\nAnd an image <img src="http://angularjs.org/img/AngularJS-large.png" alt="alt">.</p>\n<pre><code>&lt;test&gt;Code goes here.&lt;/test&gt;\n</code></pre>';
 
     $scope.file = 'file.md';
     $compile = _$compile_;
 
     $templateCache.put($scope.file, markdown);
-
   }));
 
   describe('Include', function () {
     it('should convert file', function () {
-
       element = $compile('<div><div marked src="file">JUNK</div></div>')($scope);
       $scope.$digest();
       expect(element.html()).toContain(html);
       expect(element.html()).toNotContain('JUNK');
-
     });
 
     it('should convert file', function () {
