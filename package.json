@@ -30,7 +30,7 @@
     "ngdocs": "grunt ngdocs",
     "build": "npm run compile && npm run ngdocs",
     "lint": "semistandard lib/*.js test/**/*.js",
-    "test": "npm run compile && karma start",
+    "test": "npm run compile && karma start --single-run --browsers PhantomJS",
     "check": "npm run lint && npm run test"
   },
   "browserify": {
