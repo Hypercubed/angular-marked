@@ -1,6 +1,6 @@
 {
   "name": "angular-marked",
-  "version": "0.0.21",
+  "version": "1.0.0",
   "description": "AngularJS Markdown using marked.",
   "main": "lib/angular-marked.js",
   "directories": {
