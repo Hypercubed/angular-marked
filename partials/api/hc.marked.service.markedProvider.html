@@ -1,0 +1,88 @@
+<h1><code ng:non-bindable="">markedProvider</code>
+<div><span class="hint">service in module <code ng:non-bindable="">hc.marked</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="hc-marked-service-page hc-marked-service-markedprovider-page"><p>Use <code>markedProvider</code> to change the default behavior of the <a href="#/api/hc.marked.service:marked">marked</a> service.</p>
+</div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_setoptions">setOptions(opts)</h3>
+<div class="setoptions"><h5 id="methods_setoptions_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>opts</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="markedprovider-setoptions-page"><p>Default options for <a href="https://github.com/chjj/marked#options-1">marked</a>.</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_setrenderer">setRenderer(opts)</h3>
+<div class="setrenderer"><h5 id="methods_setrenderer_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>opts</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="markedprovider-setrenderer-page"><p>Default renderer options for <a href="https://github.com/chjj/marked#overriding-renderer-methods">marked</a>.</p>
+</div></td></tr></tbody></table></div>
+</li>
+</ul>
+</div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="hc-marked-service-page hc-marked-service-markedprovider-page"><h4 id="example_example-using">Example using <a href="https://code.google.com/p/google-code-prettify/">google-code-prettify syntax highlighter</a> (must include google-code-prettify.js script).  Also works with <a href="http://highlightjs.org/">highlight.js Javascript syntax highlighter</a>.</h4>
+<h4 id="example_source">Source</h4>
+<div source-edit="myAppA" source-edit-deps="angular.js exampleA.js" source-edit-html="exampleA.html" source-edit-css="" source-edit-js="exampleA.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="exampleA.html">
+<pre class="prettyprint linenums" ng-set-text="exampleA.html"></pre>
+<script type="text/ng-template" id="exampleA.html">
+    <marked>
+    ```js
+    angular.module('myAppA', ['hc.marked'])
+      .config(['markedProvider', function(markedProvider) {
+        markedProvider.setOptions({
+          gfm: true,
+          tables: true,
+          highlight: function (code) {
+            return prettyPrintOne(code);
+          }
+        });
+      }]);
+    ```
+    </marked>
+  </script>
+</div>
+<div class="tab-pane" title="exampleA.js">
+<pre class="prettyprint linenums" ng-set-text="exampleA.js"></pre>
+<script type="text/ng-template" id="exampleA.js">
+  angular.module('myAppA', ['hc.marked'])
+    .config(['markedProvider', function(markedProvider) {
+      markedProvider.setOptions({
+        gfm: true,
+        tables: true,
+        highlight: function (code) {
+          return prettyPrintOne(code);
+        }
+      });
+    }]);
+  </script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="myAppA" ng-set-html="exampleA.html" ng-eval-javascript="exampleA.js"></div>
+<h4 id="example_example-overriding-the-way-custom-markdown-links-are-displayed">Example overriding the way custom markdown links are displayed</h4>
+<h4 id="example_source">Source</h4>
+<div source-edit="myAppB" source-edit-deps="angular.js exampleB.js" source-edit-html="exampleB.html" source-edit-css="" source-edit-js="exampleB.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="exampleB.html">
+<pre class="prettyprint linenums" ng-set-text="exampleB.html"></pre>
+<script type="text/ng-template" id="exampleB.html">
+    <marked>
+      This is [an example](http://example.com/ "Title") inline link.
+      [This link](http://example.net/) has no title attribute.
+    </marked>
+  </script>
+</div>
+<div class="tab-pane" title="exampleB.js">
+<pre class="prettyprint linenums" ng-set-text="exampleB.js"></pre>
+<script type="text/ng-template" id="exampleB.js">
+  angular.module('myAppB', ['hc.marked'])
+    .config(['markedProvider', function(markedProvider) {
+      markedProvider.setRenderer({
+        link: function(href, title, text) {
+          return "<a href='" + href + "'" + (title ? " title='" + title + "'" : '') + " target='_blank'>" + text + "</a>";
+        }
+      });
+    }]);
+  </script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="myAppB" ng-set-html="exampleB.html" ng-eval-javascript="exampleB.js"></div>
+</div></div>
+</div>

@@ -1,0 +1,36 @@
+<h1><code ng:non-bindable="">marked</code>
+<div><span class="hint">service in module <code ng:non-bindable="">hc.marked</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="hc-marked-service-page hc-marked-service-marked-page"><p>A reference to the <a href="https://github.com/chjj/marked">marked</a> parser.</p>
+</div></div>
+<h2 id="dependencies">Dependencies</h2>
+<ul class="dependencies"><li><code ng:non-bindable=""><a href="#/api/ng.$window">$window</a></code>
+</li>
+</ul>
+<h2 id="example">Example</h2>
+<div class="example"><div class="hc-marked-service-page hc-marked-service-marked-page"><h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js example.js" source-edit-html="example.html" source-edit-css="" source-edit-js="example.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="example.html">
+<pre class="prettyprint linenums" ng-set-text="example.html"></pre>
+<script type="text/ng-template" id="example.html">
+  <div ng-controller="MainController">
+    html: {{html}}
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="example.js">
+<pre class="prettyprint linenums" ng-set-text="example.js"></pre>
+<script type="text/ng-template" id="example.js">
+  function MainController($scope, marked) {
+    $scope.html = marked('#TEST');
+  }
+  angular.module('app', ['hc.marked']).controller('MainController', MainController);
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="example.html" ng-eval-javascript="example.js"></div>
+</div></div>
+</div>

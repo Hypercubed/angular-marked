@@ -1,0 +1,41 @@
+<h1><code ng:non-bindable=""></code>
+<div><span class="hint"></span>
+</div>
+</h1>
+<div><div class="index-page"><p>AngularJS Markdown using <a href="https://github.com/chjj/marked">marked</a>.</p>
+<h3 id="why">Why?</h3>
+<p>I wanted to use <a href="https://github.com/chjj/marked">marked</a> instead of <a href="https://github.com/coreyti/showdown">showdown</a> as used in <a href="https://github.com/btford/angular-markdown-directive">angular-markdown-directive</a> as well as expose the option to globally set defaults.</p>
+<h3 id="how">How?</h3>
+<ul>
+<li><a href="#/api/hc.marked.directive:marked">As a directive</a></li>
+<li><a href="#/api/hc.marked.service:marked">As a service</a></li>
+<li><a href="#/api/hc.marked.service:markedProvider">Set default options</a></li>
+</ul>
+</div><h2 id="example">Example</h2>
+<div class="example"><div class="index-page"><p>Convert markdown to html at run time.  For example:</p>
+<h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js example.js" source-edit-html="example.html" source-edit-css="" source-edit-js="example.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="example.html">
+<pre class="prettyprint linenums" ng-set-text="example.html"></pre>
+<script type="text/ng-template" id="example.html">
+    <form ng-controller="MainController">
+      Markdown:<br />
+      <textarea ng-model="my_markdown" cols="60" rows="5" class="span8"></textarea><br />
+      Output:<br />
+      <div marked="my_markdown" />
+    </form>
+  </script>
+</div>
+<div class="tab-pane" title="example.js">
+<pre class="prettyprint linenums" ng-set-text="example.js"></pre>
+<script type="text/ng-template" id="example.js">
+    function MainController($scope) {
+      $scope.my_markdown = "*This* **is** [markdown](https://daringfireball.net/projects/markdown/)";
+    }
+    angular.module('app', ['hc.marked']).controller('MainController', MainController);
+  </script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="example.html" ng-eval-javascript="example.js"></div>
+</div></div>
+</div>

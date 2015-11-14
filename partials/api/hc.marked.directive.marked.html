@@ -1,0 +1,87 @@
+<h1><code ng:non-bindable="">marked</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">hc.marked</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="hc-marked-directive-page hc-marked-directive-marked-page"><p>Compiles source test into HTML.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;marked
+       [marked="{expression}"]
+       [opts="{expression}"]
+       [src="{string}"]&gt;
+&lt;/marked&gt;</pre>
+as attribute<pre class="prettyprint linenums">&lt;any marked="{expression}"
+     [opts="{expression}"]
+     [src="{string}"]&gt;
+   ...
+&lt;/any&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>marked <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="hc-marked-directive-page hc-marked-directive-marked-page"><p>The source text to be compiled.  If blank uses content as the source.</p>
+</div></td></tr><tr><td>opts <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="hc-marked-directive-page hc-marked-directive-marked-page"><p>Hash of options that override defaults.</p>
+</div></td></tr><tr><td>src <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="hc-marked-directive-page hc-marked-directive-marked-page"><p>Expression evaluating to URL. If the source is a string constant,
+make sure you wrap it in <strong>single</strong> quotes, e.g. <code>src=&quot;&#39;myPartialTemplate.html&#39;&quot;</code>.</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="hc-marked-directive-page hc-marked-directive-marked-page"><h4 id="example_a-simple-block-of-text">A simple block of text</h4>
+<p>  <h4 id="example_source">Source</h4>
+<div source-edit="hc.marked" source-edit-deps="angular.js" source-edit-html="exampleA.html" source-edit-css="" source-edit-js="" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="exampleA.html">
+<pre class="prettyprint linenums" ng-set-text="exampleA.html"></pre>
+<script type="text/ng-template" id="exampleA.html">
+<marked>
+### Markdown directive
+
+*It works!*
+
+*This* **is** [markdown](https://daringfireball.net/projects/markdown/) in the view.
+</marked>
+    </script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="hc.marked" ng-set-html="exampleA.html" ng-eval-javascript=""></div>
+<h4 id="example_bind-to-a-scope-variable">Bind to a scope variable</h4>
+<p>  <h4 id="example_source">Source</h4>
+<div source-edit="app" source-edit-deps="angular.js exampleB.js" source-edit-html="exampleB.html" source-edit-css="" source-edit-js="exampleB.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="exampleB.html">
+<pre class="prettyprint linenums" ng-set-text="exampleB.html"></pre>
+<script type="text/ng-template" id="exampleB.html">
+      <form ng-controller="MainController">
+        Markdown:<br />
+        <textarea ng-model="my_markdown" class="span8" cols="60" rows="5"></textarea><br />
+        Output:<br />
+        <blockquote marked="my_markdown"></blockquote>
+      </form>
+    </script>
+</div>
+<div class="tab-pane" title="exampleB.js">
+<pre class="prettyprint linenums" ng-set-text="exampleB.js"></pre>
+<script type="text/ng-template" id="exampleB.js">
+function MainController($scope) {
+$scope.my_markdown = '*This* **is** [markdown](https://daringfireball.net/projects/markdown/)';
+$scope.my_markdown += ' in a scope variable';
+}
+angular.module('app', ['hc.marked']).controller('MainController', MainController);
+    </script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="app" ng-set-html="exampleB.html" ng-eval-javascript="exampleB.js"></div>
+<h4 id="example_include-a-markdown-file">Include a markdown file:</h4>
+<p>   <h4 id="example_source">Source</h4>
+<div source-edit="hc.marked" source-edit-deps="angular.js" source-edit-html="exampleC.html include.html" source-edit-css="" source-edit-js="" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="exampleC.html">
+<pre class="prettyprint linenums" ng-set-text="exampleC.html"></pre>
+<script type="text/ng-template" id="exampleC.html">
+       <div marked src="'include.html'" />
+     </script>
+</div>
+<div class="tab-pane" title="include.html">
+<pre class="prettyprint linenums" ng-set-text="include.html"></pre>
+<script type="text/ng-template" id="include.html">
+*This* **is** [markdown](https://daringfireball.net/projects/markdown/) in a include file.
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="hc.marked" ng-set-html="exampleC.html" ng-eval-javascript=""></div>
+</div></div>
+</div>
