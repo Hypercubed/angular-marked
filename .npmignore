@@ -1,5 +1,5 @@
 *
-!lib
-!angular-marked.*
+!lib/*
+!dist/*
 !README.md
 !package.json
