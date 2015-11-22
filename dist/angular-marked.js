@@ -316,7 +316,7 @@ angular.module('hc.marked', [])
       }
 
       function unindent (text) {
-        if (!text) return text;
+        if (!text) { return text; }
 
         var lines = text
           .replace(/\t/g, '  ')
@@ -325,10 +325,9 @@ angular.module('hc.marked', [])
         var min = null;
         var len = lines.length;
 
-        var l, line;
         for (var i = 0; i < len; i++) {
-          line = lines[i];
-          l = line.match(/^(\s*)/)[0].length;
+          var line = lines[i];
+          var l = line.match(/^(\s*)/)[0].length;
           if (l === line.length) { continue; }
           min = (l < min || min === null) ? l : min;
         }
