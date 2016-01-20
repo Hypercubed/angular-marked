@@ -89,10 +89,20 @@ describe('Directive: marked,', function () {
 
     it('should convert file', function () {
       var element = $compile('<div><div marked src="\'file.md\'">JUNK</div></div>')($scope);
+      spyOn($scope, "$emit")
       $scope.$digest();
       expect(element.html()).toContain(html);
       expect(element.html()).toNotContain('JUNK');
     });
+    it('should emit event on error', inject( function ($httpBackend) {
+      var element = $compile('<div><div marked src="\'file1.md\'">JUNK</div></div>')($scope);
+      var contentErrorSpy = jasmine.createSpy('content error');
+      $httpBackend.expect('GET', 'file1.md').respond(404);
+      $scope.$on('$markedIncludeError', contentErrorSpy);
+      $scope.$digest();
+      $httpBackend.flush();
+      expect(element.html()).toContain('JUNK');
+    }));
   });
 
   describe('Element,', function () {
