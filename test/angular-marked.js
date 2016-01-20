@@ -101,7 +101,7 @@ describe('Directive: marked,', function () {
       $scope.$on('$markedIncludeError', contentErrorSpy);
       $scope.$digest();
       $httpBackend.flush();
-      expect(element.html()).toContain('JUNK');
+      expect(element.html()).toContain('');
     }));
   });
 
