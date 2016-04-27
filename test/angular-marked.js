@@ -84,14 +84,14 @@ describe('Directive: marked,', function () {
       var element = $compile('<div><div marked src="file">JUNK</div></div>')($scope);
       $scope.$digest();
       expect(element.html()).toContain(html);
-      expect(element.html()).toNotContain('JUNK');
+      expect(element.html()).not.toContain('JUNK');
     });
 
     it('should convert file', function () {
       var element = $compile('<div><div marked src="\'file.md\'">JUNK</div></div>')($scope);
       $scope.$digest();
       expect(element.html()).toContain(html);
-      expect(element.html()).toNotContain('JUNK');
+      expect(element.html()).not.toContain('JUNK');
     });
   });
 
