@@ -57,7 +57,8 @@ describe('Directive: marked,', function () {
   var $scope,
     // $httpBackend,
     $compile,
-    markdown, html;
+    markdown, html,
+    markdownCompile, htmlCompileTrue, htmlCompileFalse;
 
   beforeEach(inject(function ($rootScope, $templateCache, _$compile_) {
     $scope = $rootScope.$new();
@@ -74,9 +75,22 @@ describe('Directive: marked,', function () {
     html = '<h1 id="a-heading">A heading</h1>\n<p>Hello <em>world</em>. Here is a <a href="//hello">link</a>.\nAnd an image <img src="http://angularjs.org/img/AngularJS-large.png" alt="alt">.</p>\n<pre><code>&lt;test&gt;Code goes here.&lt;/test&gt;\n</code></pre>';
 
     $scope.file = 'file.md';
+
+    $scope.ifValue = false;
+    $scope.markdownCompile = markdownCompile = [
+      '  # A heading',
+      '',
+      '<div ng-show="ifValue">This should be compiled</div>'
+    ].join('\r\n');
+
+    htmlCompileFalse = '<h1 id="a-heading" class="ng-scope">A heading</h1>\n<div ng-show="ifValue" class="ng-scope ng-hide">This should be compiled</div></div>';
+    htmlCompileTrue = '<h1 id="a-heading" class="ng-scope">A heading</h1>\n<div ng-show="ifValue" class="ng-scope">This should be compiled</div></div>';
+    $scope.fileCompile = 'file-compile.md';
+
     $compile = _$compile_;
 
     $templateCache.put($scope.file, markdown);
+    $templateCache.put($scope.fileCompile, markdownCompile);
   }));
 
   describe('Include', function () {
@@ -91,6 +105,32 @@ describe('Directive: marked,', function () {
       var element = $compile('<div><div marked src="\'file.md\'">JUNK</div></div>')($scope);
       $scope.$digest();
       expect(element.html()).toContain(html);
+      expect(element.html()).not.toContain('JUNK');
+    });
+
+    it('should compile file when compile attribute is true', function () {
+      $scope.ifValue = false;
+      var element = $compile('<div><div marked src="\'file-compile.md\'" compile="true">JUNK</div></div>')($scope);
+      $scope.$digest();
+      expect(element.html()).toContain(htmlCompileFalse);
+      expect(element.html()).not.toContain('JUNK');
+
+      $scope.ifValue = true;
+      $scope.$digest();
+      expect(element.html()).toContain(htmlCompileTrue);
+      expect(element.html()).not.toContain('JUNK');
+    });
+
+    it('should not compile file when compile attribute is false', function () {
+      $scope.ifValue = false;
+      var element = $compile('<div><div marked src="\'file-compile.md\'" compile="false">JUNK</div></div>')($scope);
+      $scope.$digest();
+      expect(element.html()).not.toContain(htmlCompileFalse);
+      expect(element.html()).not.toContain('JUNK');
+
+      $scope.ifValue = true;
+      $scope.$digest();
+      expect(element.html()).not.toContain(htmlCompileTrue);
       expect(element.html()).not.toContain('JUNK');
     });
   });
@@ -155,6 +195,32 @@ describe('Directive: marked,', function () {
     it('should convert markdown from string', function () {
       var element = $compile('<div marked="\'## String\'"></div>')($scope);
       expect(element.html()).toContain('<h2 id="string">String</h2>');
+    });
+
+    it('should compile markdown when compile attribute is true', function () {
+      $scope.ifValue = false;
+      var element = $compile('<div><div marked="markdownCompile" compile="true">JUNK</div></div>')($scope);
+      $scope.$digest();
+      expect(element.html()).toContain(htmlCompileFalse);
+      expect(element.html()).not.toContain('JUNK');
+
+      $scope.ifValue = true;
+      $scope.$digest();
+      expect(element.html()).toContain(htmlCompileTrue);
+      expect(element.html()).not.toContain('JUNK');
+    });
+
+    it('should not compile markdown when compile attribute is false', function () {
+      $scope.ifValue = false;
+      var element = $compile('<div><div marked="markdownCompile" compile="false">JUNK</div></div>')($scope);
+      $scope.$digest();
+      expect(element.html()).not.toContain(htmlCompileFalse);
+      expect(element.html()).not.toContain('JUNK');
+
+      $scope.ifValue = true;
+      $scope.$digest();
+      expect(element.html()).not.toContain(htmlCompileTrue);
+      expect(element.html()).not.toContain('JUNK');
     });
   });
 });
