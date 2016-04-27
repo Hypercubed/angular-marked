@@ -72,7 +72,9 @@ describe('Directive: marked,', function () {
       '      <test>Code goes here.</test>'
     ].join('\r\n');
 
-    html = '<h1 id="a-heading">A heading</h1>\n<p>Hello <em>world</em>. Here is a <a href="//hello">link</a>.\nAnd an image <img src="http://angularjs.org/img/AngularJS-large.png" alt="alt">.</p>\n<pre><code>&lt;test&gt;Code goes here.&lt;/test&gt;\n</code></pre>';
+    html = '<h1 id="a-heading">A heading</h1>\n<p>Hello <em>world</em>. ',
+           'Here is a <a href="//hello">link</a>.\nAnd an image <img src="http://angularjs.org/img/AngularJS-large.png" alt="alt">.</p>\n',
+           '<span ng-non-bindable><pre><code>&lt;test&gt;Code goes here.&lt;/test&gt;\n</code></pre></span>';
 
     $scope.file = 'file.md';
 
@@ -148,7 +150,7 @@ describe('Directive: marked,', function () {
 
     it('should convert markdown', function () {
       var element = $compile('<marked>`test`</marked>')($scope);
-      expect(element.html()).toContain('<p><code>test</code></p>');
+      expect(element.html()).toContain('<p><span ng-non-bindable=""><code>test</code></span></p>');
     });
 
     it('should unindent', function () {
@@ -166,18 +168,18 @@ describe('Directive: marked,', function () {
       expect(element.html()).toContain('<p><strong>test</strong>\n1 2 3</p>');
     });
 
-    it('should not digest code blocks', function () {
-      var element = angular.element('<marked>`Hello {{2 + 3}}`</marked>');
+    it('should not digest code blocks when compile attribute is true', function () {
+      var element = angular.element('<marked compile="true">`Hello {{2 + 3}}`</marked>');
       $compile(element)($scope);
       $scope.$digest();
       expect(element.html()).toContain('<code>Hello {{2 + 3}}</code>');
     });
 
-    xit('should digest non-code blocks', function () {
-      var element = angular.element('<marked>## Hello {{2 + 3}}</marked>');
+    it('should digest non-code blocks when compile attribute is true', function () {
+      var element = angular.element('<marked compile="true">## Hello {{2 + 3}}</marked>');
       $compile(element)($scope);
       $scope.$digest();
-      expect(element.html()).toContain('<h2 id="hello-file-">Hello 5</h2>');
+      expect(element.html()).toContain('<h2 id="hello-2-3-" class="ng-binding ng-scope">Hello 5</h2>');
     });
   });
 
@@ -220,6 +222,24 @@ describe('Directive: marked,', function () {
       $scope.ifValue = true;
       $scope.$digest();
       expect(element.html()).not.toContain(htmlCompileTrue);
+      expect(element.html()).not.toContain('JUNK');
+    });
+
+    it('should not compile markdown when in code block', function () {
+      $scope.markdownCodeBlock = [
+        '  # A heading',
+        '',
+        '      <div ng-show="ifValue">This should not be compiled</div>'
+      ].join('\r\n');
+
+      var element = $compile('<div><div marked="markdownCodeBlock" compile="true">JUNK</div></div>')($scope);
+      $scope.$digest();
+      expect(element.html()).not.toContain('class="ng-scope ng-hide"');
+      expect(element.html()).not.toContain('JUNK');
+
+      $scope.ifValue = true;
+      $scope.$digest();
+      expect(element.html()).not.toContain('class="ng-scope ng-hide"');
       expect(element.html()).not.toContain('JUNK');
     });
   });
