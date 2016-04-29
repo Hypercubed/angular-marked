@@ -1,7 +1,7 @@
 /* global describe, beforeEach, it */
 /* global expect */
-/* global inject */
-/* global angular */
+/* global angular, inject */
+/* global jasmine, spyOn */
 
 describe('Provider: marked,', function () {
   'use strict';
@@ -110,6 +110,7 @@ describe('Directive: marked,', function () {
 
     it('should convert file', function () {
       var element = $compile('<div><div marked src="\'file.md\'">JUNK</div></div>')($scope);
+      spyOn($scope, "$emit");
       $scope.$digest();
       expect(element.html()).toContain(html);
       expect(element.html()).not.toContain('JUNK');
@@ -140,6 +141,16 @@ describe('Directive: marked,', function () {
       expect(element.html()).not.toContain(htmlCompileTrue);
       expect(element.html()).not.toContain('JUNK');
     });
+
+    it('should emit event on error', inject(function ($httpBackend) {
+      var element = $compile('<div><div marked src="\'file1.md\'">JUNK</div></div>')($scope);
+      var contentErrorSpy = jasmine.createSpy('content error');
+      $httpBackend.expect('GET', 'file1.md').respond(404);
+      $scope.$on('$markedIncludeError', contentErrorSpy);
+      $scope.$digest();
+      $httpBackend.flush();
+      expect(element.html()).toContain('');
+    }));
   });
 
   describe('Element,', function () {
