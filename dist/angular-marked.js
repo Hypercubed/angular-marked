@@ -255,8 +255,9 @@ angular.module('hc.marked', [])
    *
    * @param {expression=} marked The source text to be compiled.  If blank uses content as the source.
    * @param {expression=} opts Hash of options that override defaults.
+   * @param {boolean=} compile Set to true to to support AngularJS directives inside markdown.
    * @param {string=} src Expression evaluating to URL. If the source is a string constant,
- *                 make sure you wrap it in **single** quotes, e.g. `src="'myPartialTemplate.html'"`.
+   *                 make sure you wrap it in **single** quotes, e.g. `src="'myPartialTemplate.html'"`.
    *
    * @example
 

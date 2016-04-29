@@ -15,6 +15,7 @@ describe('Provider: marked,', function () {
       expect(marked.defaults.langPrefix).toBe('lang-');
     });
   });
+
   it('should allow for renderers to be overwritten', function () {
     module(function (markedProvider) {
       expect(markedProvider).toBeDefined();
@@ -72,9 +73,9 @@ describe('Directive: marked,', function () {
       '      <test>Code goes here.</test>'
     ].join('\r\n');
 
-    html = '<h1 id="a-heading">A heading</h1>\n<p>Hello <em>world</em>. ',
+    html = ['<h1 id="a-heading">A heading</h1>\n<p>Hello <em>world</em>. ',
            'Here is a <a href="//hello">link</a>.\nAnd an image <img src="http://angularjs.org/img/AngularJS-large.png" alt="alt">.</p>\n',
-           '<span ng-non-bindable><pre><code>&lt;test&gt;Code goes here.&lt;/test&gt;\n</code></pre></span>';
+           '<span ng-non-bindable=""><pre><code>&lt;test&gt;Code goes here.&lt;/test&gt;\n</code></pre></span>'].join('');
 
     $scope.file = 'file.md';
 
@@ -86,7 +87,7 @@ describe('Directive: marked,', function () {
     ].join('\r\n');
 
     htmlCompileFalse = '<h1 id="a-heading" class="ng-scope">A heading</h1>\n<div ng-show="ifValue" class="ng-scope ng-hide">This should be compiled</div></div>';
-    htmlCompileTrue = '<h1 id="a-heading" class="ng-scope">A heading</h1>\n<div ng-show="ifValue" class="ng-scope">This should be compiled</div></div>';
+    htmlCompileTrue =  '<h1 id="a-heading" class="ng-scope">A heading</h1>\n<div ng-show="ifValue" class="ng-scope">This should be compiled</div></div>';
     $scope.fileCompile = 'file-compile.md';
 
     $compile = _$compile_;

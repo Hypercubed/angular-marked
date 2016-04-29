@@ -11,8 +11,10 @@
         font-size: 14px;
       }
     </style>
+    <link href="https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css" type="text/css" rel="stylesheet" />
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/marked/lib/marked.js"></script>
+    <script src="../docs/js/google-code-prettify.js"></script>
     <script src="../dist/angular-marked.min.js"></script>
   </head>
   <body ng-app="example-app" ng-controller="MainController">
@@ -36,13 +38,21 @@
 
     <p>
     <textarea ng-model="my_markdown" cols="60" rows="5"></textarea>
-    <div marked="my_markdown"></div>
+    <div marked="my_markdown" compile="true"></div>
 
-    <marked>
+    <marked compile="true">
         ### Why?
         I wanted to use [marked](https://github.com/chjj/marked) instead of [showdown](https://github.com/coreyti/showdown) as used in [angular-markdown-directive](https://github.com/btford/angular-markdown-directive) as well as expose the option to globally set defaults.
 
         ### How?
+
+        #### Set default options
+
+        ```js
+            app.config(['markedProvider', function(markedProvider) {
+              markedProvider.setOptions({gfm: true});
+            }]);
+        ```
 
         #### A block of text:
 
@@ -63,17 +73,16 @@
         #### Include a markdown file:
 
         ```html
-            &lt;div marked src="'README.md'">&lt;/div>
+            &lt;marked src="'README.md'">&lt;/marked>
             &lt;!-- Uses markdown content from README.md -->
         ```
 
-        #### Set default options
+        #### Use the compile flag:
 
-        ```js
-          app.config(['markedProvider', function(markedProvider) {
-            markedProvider.setOptions({gfm: true});
-          }]);
-
+        ```html
+            &lt;marked compile="true">
+              `{{1 + 2}}` = {{1 + 2}}
+            &lt;/marked>
         ```
     </marked>
 
@@ -84,10 +93,17 @@
   <script>
     angular.module('example-app', ['hc.marked'])
     .config(['markedProvider', function(markedProvider) {
-      markedProvider.setOptions({gfm: true});
+      markedProvider.setOptions({
+        gfm: true,
+        tables: true,
+        sanitize: true,
+        highlight: function (code, lang) {
+          return lang === 'html' ? code : prettyPrintOne(code);
+        }
+      });
     }])
     .controller('MainController', ['$scope', function($scope) {
-      $scope.my_markdown = "*This* **is** [markdown](https://daringfireball.net/projects/markdown/)";
+        $scope.my_markdown = "*This* **is** [markdown](https://daringfireball.net/projects/markdown/)\n and `{{ 1 + 2 }}` = {{ 1 + 2 }}";
     }]);
   </script>
 </html>
