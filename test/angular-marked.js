@@ -1,6 +1,7 @@
 /* global describe, beforeEach, it */
 /* global expect */
 /* global inject */
+/* global angular */
 
 describe('Provider: marked,', function () {
   'use strict';
@@ -55,11 +56,14 @@ describe('Directive: marked,', function () {
   // load the directive's module
   beforeEach(module('hc.marked'));
 
-  var $scope,
+  var $scope;
     // $httpBackend,
-    $compile,
-    markdown, html,
-    markdownCompile, htmlCompileTrue, htmlCompileFalse;
+  var $compile;
+  var markdown;
+  var html;
+  var markdownCompile;
+  var htmlCompileTrue;
+  var htmlCompileFalse;
 
   beforeEach(inject(function ($rootScope, $templateCache, _$compile_) {
     $scope = $rootScope.$new();
@@ -87,7 +91,7 @@ describe('Directive: marked,', function () {
     ].join('\r\n');
 
     htmlCompileFalse = '<h1 id="a-heading" class="ng-scope">A heading</h1>\n<div ng-show="ifValue" class="ng-scope ng-hide">This should be compiled</div></div>';
-    htmlCompileTrue =  '<h1 id="a-heading" class="ng-scope">A heading</h1>\n<div ng-show="ifValue" class="ng-scope">This should be compiled</div></div>';
+    htmlCompileTrue = '<h1 id="a-heading" class="ng-scope">A heading</h1>\n<div ng-show="ifValue" class="ng-scope">This should be compiled</div></div>';
     $scope.fileCompile = 'file-compile.md';
 
     $compile = _$compile_;

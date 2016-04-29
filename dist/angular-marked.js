@@ -221,11 +221,11 @@ angular.module('hc.marked', [])
     }
 
     var renderCode = r.code.bind(r);
-    r.code = function(code, lang, escaped) {
+    r.code = function (code, lang, escaped) {
       return wrapNonBindable(renderCode(code, lang, escaped));
     };
     var renderCodespan = r.codespan.bind(r);
-    r.codespan = function(code) {
+    r.codespan = function (code) {
       return wrapNonBindable(renderCodespan(code));
     };
 
@@ -239,7 +239,7 @@ angular.module('hc.marked', [])
   }];
 })
 
-  // TODO: filter and tests */
+  // xTODO: filter and tests */
   // app.filter('marked', ['marked', function(marked) {
   //   return marked;
   // }]);
@@ -332,8 +332,10 @@ angular.module('hc.marked', [])
         });
       }
 
-      function unindent (text) {
-        if (!text) { return text; }
+      function unindent(text) {
+        if (!text) {
+          return text;
+        }
 
         var lines = text
           .replace(/\t/g, '  ')
@@ -341,11 +343,14 @@ angular.module('hc.marked', [])
 
         var min = null;
         var len = lines.length;
+        var i;
 
-        for (var i = 0; i < len; i++) {
+        for (i = 0; i < len; i++) {
           var line = lines[i];
           var l = line.match(/^(\s*)/)[0].length;
-          if (l === line.length) { continue; }
+          if (l === line.length) {
+            continue;
+          }
           min = (l < min || min === null) ? l : min;
         }
 
@@ -357,7 +362,7 @@ angular.module('hc.marked', [])
         return lines.join('\n');
       }
 
-      function set (text) {
+      function set(text) {
         text = unindent(text || '');
         element.html(marked(text, scope.opts || null));
         if (scope.$eval(attrs.compile)) {
