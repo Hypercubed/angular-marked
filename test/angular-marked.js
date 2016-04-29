@@ -15,6 +15,7 @@ describe('Provider: marked,', function () {
       expect(marked.defaults.langPrefix).toBe('lang-');
     });
   });
+
   it('should allow for renderers to be overwritten', function () {
     module(function (markedProvider) {
       expect(markedProvider).toBeDefined();
@@ -57,7 +58,8 @@ describe('Directive: marked,', function () {
   var $scope,
     // $httpBackend,
     $compile,
-    markdown, html;
+    markdown, html,
+    markdownCompile, htmlCompileTrue, htmlCompileFalse;
 
   beforeEach(inject(function ($rootScope, $templateCache, _$compile_) {
     $scope = $rootScope.$new();
@@ -71,12 +73,27 @@ describe('Directive: marked,', function () {
       '      <test>Code goes here.</test>'
     ].join('\r\n');
 
-    html = '<h1 id="a-heading">A heading</h1>\n<p>Hello <em>world</em>. Here is a <a href="//hello">link</a>.\nAnd an image <img src="http://angularjs.org/img/AngularJS-large.png" alt="alt">.</p>\n<pre><code>&lt;test&gt;Code goes here.&lt;/test&gt;\n</code></pre>';
+    html = ['<h1 id="a-heading">A heading</h1>\n<p>Hello <em>world</em>. ',
+           'Here is a <a href="//hello">link</a>.\nAnd an image <img src="http://angularjs.org/img/AngularJS-large.png" alt="alt">.</p>\n',
+           '<span ng-non-bindable=""><pre><code>&lt;test&gt;Code goes here.&lt;/test&gt;\n</code></pre></span>'].join('');
 
     $scope.file = 'file.md';
+
+    $scope.ifValue = false;
+    $scope.markdownCompile = markdownCompile = [
+      '  # A heading',
+      '',
+      '<div ng-show="ifValue">This should be compiled</div>'
+    ].join('\r\n');
+
+    htmlCompileFalse = '<h1 id="a-heading" class="ng-scope">A heading</h1>\n<div ng-show="ifValue" class="ng-scope ng-hide">This should be compiled</div></div>';
+    htmlCompileTrue =  '<h1 id="a-heading" class="ng-scope">A heading</h1>\n<div ng-show="ifValue" class="ng-scope">This should be compiled</div></div>';
+    $scope.fileCompile = 'file-compile.md';
+
     $compile = _$compile_;
 
     $templateCache.put($scope.file, markdown);
+    $templateCache.put($scope.fileCompile, markdownCompile);
   }));
 
   describe('Include', function () {
@@ -84,14 +101,40 @@ describe('Directive: marked,', function () {
       var element = $compile('<div><div marked src="file">JUNK</div></div>')($scope);
       $scope.$digest();
       expect(element.html()).toContain(html);
-      expect(element.html()).toNotContain('JUNK');
+      expect(element.html()).not.toContain('JUNK');
     });
 
     it('should convert file', function () {
       var element = $compile('<div><div marked src="\'file.md\'">JUNK</div></div>')($scope);
       $scope.$digest();
       expect(element.html()).toContain(html);
-      expect(element.html()).toNotContain('JUNK');
+      expect(element.html()).not.toContain('JUNK');
+    });
+
+    it('should compile file when compile attribute is true', function () {
+      $scope.ifValue = false;
+      var element = $compile('<div><div marked src="\'file-compile.md\'" compile="true">JUNK</div></div>')($scope);
+      $scope.$digest();
+      expect(element.html()).toContain(htmlCompileFalse);
+      expect(element.html()).not.toContain('JUNK');
+
+      $scope.ifValue = true;
+      $scope.$digest();
+      expect(element.html()).toContain(htmlCompileTrue);
+      expect(element.html()).not.toContain('JUNK');
+    });
+
+    it('should not compile file when compile attribute is false', function () {
+      $scope.ifValue = false;
+      var element = $compile('<div><div marked src="\'file-compile.md\'" compile="false">JUNK</div></div>')($scope);
+      $scope.$digest();
+      expect(element.html()).not.toContain(htmlCompileFalse);
+      expect(element.html()).not.toContain('JUNK');
+
+      $scope.ifValue = true;
+      $scope.$digest();
+      expect(element.html()).not.toContain(htmlCompileTrue);
+      expect(element.html()).not.toContain('JUNK');
     });
   });
 
@@ -108,7 +151,7 @@ describe('Directive: marked,', function () {
 
     it('should convert markdown', function () {
       var element = $compile('<marked>`test`</marked>')($scope);
-      expect(element.html()).toContain('<p><code>test</code></p>');
+      expect(element.html()).toContain('<p><span ng-non-bindable=""><code>test</code></span></p>');
     });
 
     it('should unindent', function () {
@@ -126,18 +169,18 @@ describe('Directive: marked,', function () {
       expect(element.html()).toContain('<p><strong>test</strong>\n1 2 3</p>');
     });
 
-    it('should not digest code blocks', function () {
-      var element = angular.element('<marked>`Hello {{2 + 3}}`</marked>');
+    it('should not digest code blocks when compile attribute is true', function () {
+      var element = angular.element('<marked compile="true">`Hello {{2 + 3}}`</marked>');
       $compile(element)($scope);
       $scope.$digest();
       expect(element.html()).toContain('<code>Hello {{2 + 3}}</code>');
     });
 
-    xit('should digest non-code blocks', function () {
-      var element = angular.element('<marked>## Hello {{2 + 3}}</marked>');
+    it('should digest non-code blocks when compile attribute is true', function () {
+      var element = angular.element('<marked compile="true">## Hello {{2 + 3}}</marked>');
       $compile(element)($scope);
       $scope.$digest();
-      expect(element.html()).toContain('<h2 id="hello-file-">Hello 5</h2>');
+      expect(element.html()).toContain('<h2 id="hello-2-3-" class="ng-binding ng-scope">Hello 5</h2>');
     });
   });
 
@@ -155,6 +198,50 @@ describe('Directive: marked,', function () {
     it('should convert markdown from string', function () {
       var element = $compile('<div marked="\'## String\'"></div>')($scope);
       expect(element.html()).toContain('<h2 id="string">String</h2>');
+    });
+
+    it('should compile markdown when compile attribute is true', function () {
+      $scope.ifValue = false;
+      var element = $compile('<div><div marked="markdownCompile" compile="true">JUNK</div></div>')($scope);
+      $scope.$digest();
+      expect(element.html()).toContain(htmlCompileFalse);
+      expect(element.html()).not.toContain('JUNK');
+
+      $scope.ifValue = true;
+      $scope.$digest();
+      expect(element.html()).toContain(htmlCompileTrue);
+      expect(element.html()).not.toContain('JUNK');
+    });
+
+    it('should not compile markdown when compile attribute is false', function () {
+      $scope.ifValue = false;
+      var element = $compile('<div><div marked="markdownCompile" compile="false">JUNK</div></div>')($scope);
+      $scope.$digest();
+      expect(element.html()).not.toContain(htmlCompileFalse);
+      expect(element.html()).not.toContain('JUNK');
+
+      $scope.ifValue = true;
+      $scope.$digest();
+      expect(element.html()).not.toContain(htmlCompileTrue);
+      expect(element.html()).not.toContain('JUNK');
+    });
+
+    it('should not compile markdown when in code block', function () {
+      $scope.markdownCodeBlock = [
+        '  # A heading',
+        '',
+        '      <div ng-show="ifValue">This should not be compiled</div>'
+      ].join('\r\n');
+
+      var element = $compile('<div><div marked="markdownCodeBlock" compile="true">JUNK</div></div>')($scope);
+      $scope.$digest();
+      expect(element.html()).not.toContain('class="ng-scope ng-hide"');
+      expect(element.html()).not.toContain('JUNK');
+
+      $scope.ifValue = true;
+      $scope.$digest();
+      expect(element.html()).not.toContain('class="ng-scope ng-hide"');
+      expect(element.html()).not.toContain('JUNK');
     });
   });
 });
