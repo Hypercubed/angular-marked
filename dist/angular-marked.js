@@ -328,6 +328,9 @@ angular.module('hc.marked', [])
         scope.$watch('src', function (src) {
           $templateRequest(src, true).then(function (response) {
             set(response);
+          }, function () {
+            set('');
+            scope.$emit('$markedIncludeError', attrs.src);
           });
         });
       }
