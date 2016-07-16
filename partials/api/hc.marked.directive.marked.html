@@ -10,15 +10,18 @@
 <div class="usage">as element:<pre class="prettyprint linenums">&lt;marked
        [marked="{expression}"]
        [opts="{expression}"]
+       [compile="{boolean}"]
        [src="{string}"]&gt;
 &lt;/marked&gt;</pre>
 as attribute<pre class="prettyprint linenums">&lt;any marked="{expression}"
      [opts="{expression}"]
+     [compile="{boolean}"]
      [src="{string}"]&gt;
    ...
 &lt;/any&gt;</pre>
 <h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>marked <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="hc-marked-directive-page hc-marked-directive-marked-page"><p>The source text to be compiled.  If blank uses content as the source.</p>
 </div></td></tr><tr><td>opts <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="hc-marked-directive-page hc-marked-directive-marked-page"><p>Hash of options that override defaults.</p>
+</div></td></tr><tr><td>compile <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="hc-marked-directive-page hc-marked-directive-marked-page"><p>Set to true to to support AngularJS directives inside markdown.</p>
 </div></td></tr><tr><td>src <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="hc-marked-directive-page hc-marked-directive-marked-page"><p>Expression evaluating to URL. If the source is a string constant,
 make sure you wrap it in <strong>single</strong> quotes, e.g. <code>src=&quot;&#39;myPartialTemplate.html&#39;&quot;</code>.</p>
 </div></td></tr></tbody></table></div>
