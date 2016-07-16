@@ -110,7 +110,7 @@ describe('Directive: marked,', function () {
 
     it('should convert file', function () {
       var element = $compile('<div><div marked src="\'file.md\'">JUNK</div></div>')($scope);
-      spyOn($scope, "$emit");
+      spyOn($scope, '$emit');
       $scope.$digest();
       expect(element.html()).toContain(html);
       expect(element.html()).not.toContain('JUNK');

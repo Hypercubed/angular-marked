@@ -10,19 +10,19 @@
     "marked": "^0.3.3"
   },
   "devDependencies": {
-    "browserify": "^12.0.1",
-    "grunt": "^0.4.5",
-    "grunt-gh-pages": "^0.9.1",
+    "browserify": "^13.0.1",
+    "grunt": "^1.0.1",
+    "grunt-gh-pages": "^1.1.0",
     "grunt-ngdocs": "^0.2.5",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.15",
     "karma-chrome-launcher": "^0.2.3",
     "karma-jasmine": "^0.3.8",
     "karma-phantomjs-launcher": "^1.0.0",
-    "load-grunt-tasks": "^0.4.0",
+    "load-grunt-tasks": "^3.5.0",
     "phantomjs-prebuilt": "^2.1.0",
     "uglifyjs": "^2.4.10",
-    "xo": "^0.14.0"
+    "xo": "^0.16.0"
   },
   "scripts": {
     "browserify": "browserify lib/angular-marked.js -s angular-marked -o dist/angular-marked.js -x marked",
