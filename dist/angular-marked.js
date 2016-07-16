@@ -318,13 +318,10 @@ angular.module('hc.marked', [])
       src: '='
     },
     link: function (scope, element, attrs) {
-      set(scope.marked || element.text() || '');
-
       if (attrs.marked) {
+        set(scope.marked);
         scope.$watch('marked', set);
-      }
-
-      if (attrs.src) {
+      } else if (attrs.src) {
         scope.$watch('src', function (src) {
           $templateRequest(src, true).then(function (response) {
             set(response);
@@ -333,6 +330,8 @@ angular.module('hc.marked', [])
             scope.$emit('$markedIncludeError', attrs.src);
           });
         });
+      } else {
+        set(element.text());
       }
 
       function unindent(text) {
@@ -366,7 +365,7 @@ angular.module('hc.marked', [])
       }
 
       function set(text) {
-        text = unindent(text || '');
+        text = unindent(String(text || ''));
         element.html(marked(text, scope.opts || null));
         if (scope.$eval(attrs.compile)) {
           $compile(element.contents())(scope.$parent);
