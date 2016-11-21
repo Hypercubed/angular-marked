@@ -12,7 +12,7 @@
 
 AngularJS Markdown using [marked](https://github.com/chjj/marked).
 
-**Please note:** neither this directive nor marked (by default) implement sanitization. As always, sanitizing is necessary for user-generated content.
+**Please note:** this directive does not implement sanitization. As always, sanitizing is necessary for user-generated content.
 
 ## Install
 
