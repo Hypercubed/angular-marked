@@ -185,6 +185,18 @@ function markedProvider() {
     this.defaults = opts;
   };
 
+  /**
+   * @ngdoc method
+   * @name markedProvider#setLexer
+   * @methodOf hc.marked.service:markedProvider
+   *
+   * @param {object} lexer The lexer applied to [marked](https://github.com/chjj/marked#access-to-lexer-and-parser).
+   */
+
+   self.setLexer = function (lexer) {
+     this.lexer = lexer;
+   };
+
   self.$get = ['$log', '$window', function ($log, $window) {
     var m;
 
@@ -231,6 +243,13 @@ function markedProvider() {
     self.defaults.renderer = r;
 
     m.setOptions(self.defaults);
+
+    // add marked lexer to defaults
+    self.defaults.lexer = m.lexer;
+    
+    if (self.lexer) {
+      m.lexer = self.lexer;
+    };
 
     return m;
   }];
