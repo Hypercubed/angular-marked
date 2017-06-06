@@ -197,6 +197,18 @@ function markedProvider() {
      this.lexer = lexer;
    };
 
+   /**
+    * @ngdoc method
+    * @name markedProvider#setParse
+    * @methodOf hc.marked.service:markedProvider
+    *
+    * @param {function} parse Overwrite the parse method called by marked.
+    */
+
+    self.setParse = function (parse) {
+      this.parse = parse;
+    };
+
   self.$get = ['$log', '$window', function ($log, $window) {
     var m;
 
@@ -246,9 +258,16 @@ function markedProvider() {
 
     // add marked lexer to defaults
     self.defaults.lexer = m.lexer;
-    
+
     if (self.lexer) {
       m.lexer = self.lexer;
+    };
+
+    // add marked parse method to defaults
+    self.defaults.parse = m.parse;
+
+    if (self.parser) {
+      m.parse = self.parse;
     };
 
     return m;
@@ -352,7 +371,7 @@ function markedDirective(marked, $templateRequest, $compile) {
 
       function set(text) {
         text = unindent(String(text || ''));
-        element.html(marked(text, scope.opts || null));
+        element.html(marked.parse(text, scope.opts || null));
         if (scope.$eval(attrs.compile)) {
           $compile(element.contents())(scope.$parent);
         }
